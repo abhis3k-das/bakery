@@ -1,0 +1,55 @@
+.circle {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    border: 1px solid #fcfcfc;
+    border-radius: 50%;
+    /* background-color: #cccccc; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+
+}
+
+.innerCircle {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    /* border: 5px solid red; */
+    /* background-color: #cccccc; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: rotate360 8s linear infinite;
+}
+
+@keyframes rotate360 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.logo {
+    font-size: 50px;
+}
+
+.text {
+    font-family: 'Cormorant Infant', serif;
+    position: absolute;
+    top: 0;
+    text-align: center;
+    color: #fcfcfc;
+}
+
+.text span {
+    position: absolute;
+    left: 50%;
+    font-size: 1.2em;
+    transform-origin: 0 70px;
+}
