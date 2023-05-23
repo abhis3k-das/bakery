@@ -3,7 +3,6 @@ import styles from './GotoProductsIcon.module.css';
 function GotoProductsIcon() {
     useEffect(() => {
         const text = document.querySelector('#text');
-        console.log(text.innerText.split(''))
         text.innerHTML = text.innerText.split("").map((each, i) => {
             return `<span style=transform:rotate(${i * 7}deg)>${each}</span>`
         }).join("")

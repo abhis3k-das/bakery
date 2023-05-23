@@ -7,6 +7,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 5vw;
+    /* background-color: #F9F6EE; */
+    background-color: black;
+    overflow: hidden;
 }
 
 .page2-imageDiv {
@@ -14,11 +17,11 @@
     width: 900px;
     /* position: relative; */
     opacity: 0;
-    transform: translateX(100px);
+    transform: translateX(-100px);
     overflow: hidden;
-    animation: fadein 1s 1s forwards;
     filter: drop-shadow(0 0 0.75rem black);
-    border: 1px solid green;
+    transition: all 400ms 100ms;
+
 
 }
 
@@ -32,8 +35,8 @@
 
 @keyframes fadein {
     100% {
-        opacity: 1;
-        transform: translate(0);
+        opacity: 0;
+        transform: translateX(0);
     }
 }
 
@@ -64,6 +67,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    transform: translateX(200px);
+    transition: all 400ms 100ms;
 }
 
 .page2-btn {
@@ -71,6 +77,8 @@
     padding: 18px 45px;
     background-color: transparent;
     text-transform: uppercase;
+    border: 1px solid white;
+    color: white;
 }
 
 .page2-btn:hover {
@@ -78,4 +86,9 @@
     transition: background-color 120ms linear;
     cursor: pointer;
     color: #fcfcfc;
+}
+
+.page2-show {
+    opacity: 1;
+    transform: translate(0);
 }
