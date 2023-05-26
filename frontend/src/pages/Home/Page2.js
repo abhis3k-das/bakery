@@ -19,9 +19,7 @@ function Page2() {
         const scroll = () => {
             let currPoint = window.scrollY;
             setDis(currPoint)
-            previousPoint = currPoint
         }
-        let previousPoint = window.scrollY
         window.addEventListener('scroll', scroll);
         return () => {
             window.removeEventListener('scroll', scroll);
@@ -31,7 +29,7 @@ function Page2() {
     return (
         <div className={styles.page2Container}>
             <div ref={page2Image} className={styles['page2-imageDiv']}>
-                <img src={require('../../images/baking-transformed2.jpeg')} className={styles['page2-img']} style={{ marginLeft: `${130 - (dis * 0.4)}px`, }}></img>
+                <img src={require('../../images/baking-transformed2.jpeg')} alt="..." className={styles['page2-img']} style={{ marginLeft: `${130 - (dis * 0.4)}px`, }}></img>
             </div>
             <div ref={page2Text} className={styles['page2-textBox']}>
                 <div className={styles['page2-text']}>

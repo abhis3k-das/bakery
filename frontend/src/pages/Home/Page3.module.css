@@ -9,14 +9,16 @@
     background-image: url("../../images/homePage3/page3bg2.jpg");
     background-size: contain;
     background-position: center;
-    opacity: 0;
-    transition: all 600ms 100ms;
+    background-color: black;
+    
 }
 
 .page3-carouselContainer {
     width: 80%;
     margin: 20px auto;
     height: 70vh;
+    opacity: 0;
+    transition: all 600ms 100ms;
 }
 
 .page3-carousel {
@@ -30,7 +32,23 @@
     position: relative;
     padding: 50px;
 }
+.page3-carouselControl span{
+    display: block;
+    
+}
+.page3-carouselControl{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    box-sizing: border-box;
+    left:-50px;
+    right:-50px;
+    top:0;
+    height: 100%;
 
+}
 .page3-slider {
     display: flex;
     height: 100%;
@@ -44,24 +62,22 @@
 
 
 .arrow {
-    position: absolute;
+    /* position: absolute; */
     cursor: pointer;
-    margin: auto 0;
-    top: 45%;
+    /* margin: auto 0; */
+    /* top: 45%; */
     height: 40px;
     width: 40px;
     border-radius: 7px;
 }
 
 .arrow.prev {
-    left: 100px;
     transform: rotate(45deg);
     border-left: 5px solid white;
     border-bottom: 5px solid white;
 }
 
 .arrow.next {
-    right: 100px;
     transform: rotate(-135deg);
     border-left: 5px solid white;
     border-bottom: 5px solid white;

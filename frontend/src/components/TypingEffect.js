@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-function TypingEffect({opacity,textStyles,fullText="abc"}) {
+function TypingEffect({opacity,textStyles,fullText}) {
     const [text, setText] = useState("");
     const [currentIndex, setCurrentIndex] = useState(0);
     const typingSpeed = 7; // Adjust typing speed (in milliseconds)
     useEffect(() => {
         let timer = null;
+        console.log(opacity)
         if(opacity !== 0){            
             timer = setTimeout(() => {
                 if (currentIndex < fullText.length) {

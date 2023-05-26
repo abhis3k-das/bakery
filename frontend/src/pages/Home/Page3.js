@@ -22,7 +22,7 @@ function Page3() {
    }),[]);
    const carouselRef = useRef(null);
    const sliderRef = useRef(null);
-   const page3Observer = useRef();
+   const carouselObserver = useRef();
    const page3header = useRef();
    const [product, setProduct] = useState("pastry");
    var dir = 0;
@@ -36,7 +36,7 @@ function Page3() {
          },
          { threshold: 0 }
       );
-      observer.observe(page3Observer.current);
+      observer.observe(carouselObserver.current);
       observer.observe(page3header.current);
    },[]);
    useEffect(() => {
@@ -108,7 +108,7 @@ function Page3() {
 
    return (
       <>
-         <div ref={page3Observer} className={styles["page3Container"]}>
+         <div className={styles["page3Container"]}>
             <div className={styles["page3-shadow"]}>
                <div ref={page3header} className={styles['page3-header']}>
                   <h1>
@@ -123,7 +123,7 @@ function Page3() {
                   </div>
                </div>
             </div>
-            <div className={styles["page3-carouselContainer"]}>
+            <div ref={carouselObserver} className={styles["page3-carouselContainer"]}>
                <div className={styles["page3-carousel"]} ref={carouselRef}>
                   <div
                      ref={sliderRef}
@@ -158,18 +158,19 @@ function Page3() {
                         <span
                            className={[styles["arrow"], styles["prev"]].join(
                               " "
-                           )}
-                           onClick={prevHandler}
+                              )}
+                              onClick={prevHandler}
                         ></span>
                         <span
                            className={[styles["arrow"], styles["next"]].join(
                               " "
-                           )}
-                           onClick={nextHandler}
+                              )}
+                              onClick={nextHandler}
                         ></span>
                      </div>
-                  )}
+                )}
             </div>
+               
          </div>
       </>
    );
