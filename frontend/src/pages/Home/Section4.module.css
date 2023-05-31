@@ -1,23 +1,20 @@
 .page4Container{
     height:100vh;
     width:100%;
-    /* background-color: black; */
-    /* color:white; */
     display:flex;
     justify-content: space-between;
-    padding: 7% 9%;
+    padding: 5% 9%;
     box-sizing: border-box;
     background-color: antiquewhite;
 }
 
 .page4-img-container{
     flex-grow: 1;
-    flex-basis: 200px;
-    background-color: blue;
+    width: 200px;
     margin: 2.5rem;
     overflow: hidden;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
 }
 .page4-text-container{
     flex-grow: 1;
@@ -28,6 +25,7 @@
     white-space: pre-line;
     opacity: 0;
     transition: all 100ms 0ms;
+    overflow: scroll;
 }
 .page4-text-header{
     font-size: 1.8rem;

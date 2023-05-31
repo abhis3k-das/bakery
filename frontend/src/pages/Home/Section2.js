@@ -1,6 +1,6 @@
-import styles from './Page2.module.css';
+import styles from './Section2.module.css';
 import React, { useEffect, useRef, useState } from 'react';
-function Page2() {
+function Section2() {
     const [dis, setDis] = useState(0)
     const page2Image = useRef();
     const page2Text = useRef();
@@ -8,6 +8,9 @@ function Page2() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 entry.target.classList.toggle(styles['page2-show'], entry.isIntersecting)
+                if(entry.isIntersecting){
+                    observer.unobserve(entry.target);
+                }
             })
 
         }, { threshold: 0.4 })
@@ -41,4 +44,4 @@ function Page2() {
         </div>
     )
 }
-export default Page2;
+export default Section2;

@@ -1,7 +1,7 @@
-import styles from "./Page4.module.css";
+import styles from "./Section4.module.css";
 import TypingEffect from "../../components/TypingEffect";
 import React, { useState, useEffect, useRef } from "react";
-function Page4() {
+function Section4() {
     const textRef = useRef();
     const [opacity, setOpacity] = useState(false);
     const [textArea,setTextArea] = useState(<></>)
@@ -59,4 +59,4 @@ function Page4() {
     );
 }
 
-export default Page4;
+export default Section4;

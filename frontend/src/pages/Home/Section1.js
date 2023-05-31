@@ -1,9 +1,9 @@
 import GotoProductsIcon from '../../components/GotoProductsIcon';
-import styles from './Page1.module.css';
+import styles from './Section1.module.css';
 
 import React, { useEffect, useState } from 'react';
 
-function Page1() {
+function Section1() {
 
     const [dis, setDis] = useState(0)
     useEffect(() => {
@@ -40,4 +40,4 @@ function Page1() {
     )
 }
 
-export default Page1;
+export default Section1;

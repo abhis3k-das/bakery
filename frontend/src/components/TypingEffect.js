@@ -6,7 +6,6 @@ function TypingEffect({opacity,textStyles,fullText}) {
     const typingSpeed = 7; // Adjust typing speed (in milliseconds)
     useEffect(() => {
         let timer = null;
-        console.log(opacity)
         if(opacity !== 0){            
             timer = setTimeout(() => {
                 if (currentIndex < fullText.length) {

@@ -1,0 +1,159 @@
+.homePage-section3-container{
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    color: white;
+    background-color: black;
+    background-image: url('http://www.nicdarkthemes.com/themes/bakery/wp/demo/bakery/wp-content/uploads/sites/2/2019/12/para-6.jpg');
+    background-position: center;
+}
+
+.homePage-section3-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: black;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+}
+.homePage-section3-header{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2rem 6rem;
+    font-family:'Cormorant Infant',serif;
+    transform: translateY(100px);
+    transition: transform 0.6s linear;
+}
+
+.homePage-section3-header p:first-of-type{
+    font-size: 1.4rem;
+}
+.homePage-section3-header h1{
+    font-size: 2rem;
+    line-height: 2.4rem;
+    font-weight: 900;
+}
+.homePage-section3-items {
+    text-transform: uppercase;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    
+} 
+.homePage-section3-item{
+    margin: 0 1.2rem;
+    padding-bottom: 5px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    opacity: 0.6;
+    z-index: 1;
+    cursor: pointer;
+}
+.homePage-section3-activeItem{
+    border-bottom: 3px solid white;
+    opacity: 1;
+}
+
+
+@media (max-width:900px) {
+    .homePage-section3-header{
+        padding: 1.6rem 5rem;
+    }
+    .homePage-section3-items span{
+        font-size: 1rem;
+    }
+
+}
+@media (max-width:805px) {
+    .homePage-section3-header{
+        padding: 1.2rem 4.5rem;
+    }
+    .homePage-section3-header p:first-of-type{
+        font-size: 1.2rem;
+    }
+    .homePage-section3-header h1{
+        font-size: 1.6rem;
+    }
+    .homePage-section3-items span{
+        font-size: 0.9rem;
+    }
+
+}
+.homePage-section3-carousel-container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 1s linear;
+}
+
+.homePage-section3-carousel-item{
+    height: 350px;
+    width: 275px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+@media (max-width:1450px) {
+    .homePage-section3-carousel-item{
+        height: 350px;
+        width: 280px;
+    }
+}
+@media (max-width:1330px) {
+    .homePage-section3-carousel-item{
+        height: 320px;
+        width: 250px;
+    }
+}
+.homePage-section3-item-image{
+    height: 100%;
+    width: 100%;
+}
+.homePage-section3-item-overlay{
+    position: absolute;
+    top:0;
+    left:0;
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    opacity: 0.2;
+}
+.homePage-section3-item-title{
+    position: absolute;
+    top:1rem;
+    right:1rem;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    background-color: black;
+    color: white;
+    letter-spacing: 1px;
+}
+.homePage-section3-carousel-item button{
+    position: absolute;
+    bottom: 2rem;
+    right: 1rem;
+    padding: 5px 6px;
+    font-size: 20px;
+    background-color:burlywood;
+    color: white;
+    border: none;
+}
+.homePage-section3-show{
+    transform: translateY(0);
+    opacity: 1;
+}
