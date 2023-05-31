@@ -107,7 +107,7 @@ function Section3() {
 						return (
 							<SwiperSlide style={{margin: "50px"}} key={Math.random()*index}>
 								<div className={styles["homePage-section3-carousel-item"]}>
-									<img src={imgg} className={styles["homePage-section3-item-image"]}></img>
+									<img src={imgg} className={styles["homePage-section3-item-image"]} alt="..."></img>
 									<span className={styles["homePage-section3-item-overlay"]}></span>
 									<span className={styles["homePage-section3-item-title"]}>Cookie</span>
 									<button onClick={addToCart}>+</button>
