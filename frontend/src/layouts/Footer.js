@@ -18,19 +18,19 @@ function Footer() {
 						<p>
 							Follow us : &nbsp;&nbsp;&nbsp;
 							<a href="#">
-								<ImFacebook style={{color: "white", height: "1rem", width: "1rem"}} />
+								<ImFacebook style={{color: "white", height: "1.5rem", width: "1.5rem"}} />
 							</a>
 							&nbsp;&nbsp;&nbsp;
 							<a href="#">
-								<ImTwitter style={{color: "white", height: "1rem", width: "1rem"}} />
+								<ImTwitter style={{color: "white", height: "1.5rem", width: "1.5rem"}} />
 							</a>
 							&nbsp;&nbsp;&nbsp;
 							<a href="#">
-								<ImInstagram style={{color: "white", height: "1rem", width: "1rem"}} />
+								<ImInstagram style={{color: "white", height: "1.5rem", width: "1.5rem"}} />
 							</a>
 							&nbsp;&nbsp;&nbsp;
 							<a href="#">
-								<ImPinterest style={{color: "white", height: "1rem", width: "1rem"}} />
+								<ImPinterest style={{color: "white", height: "1.5rem", width: "1.5rem"}} />
 							</a>
 						</p>
 					</div>

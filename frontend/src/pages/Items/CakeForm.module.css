@@ -1,0 +1,34 @@
+.cake-area {
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.cake-area input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.item-weight-selector {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap:0.5rem
+}
+
+.selected-weight {
+    background-color: #63c5da;
+    color: white;
+}
+
+.weight-box {
+    height: 30px;
+    border: 1px solid black;
+    text-align: center;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.weight-box:first-of-type {
+    margin-left: 0;
+}

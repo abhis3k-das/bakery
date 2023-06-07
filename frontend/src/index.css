@@ -134,7 +134,16 @@ table {
   justify-content: center;
   align-items: center;
 }
+::-webkit-scrollbar {
+  width: 8px;
+}
 
-/* html {
-  background-color: rgb(28, 46, 59);
-} */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

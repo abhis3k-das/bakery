@@ -1,0 +1,23 @@
+.items-filter-buttons {
+    margin: 2rem 0;
+}
+
+.items-filter-buttons button {
+    text-transform: uppercase;
+    margin: 0 0.5rem;
+    border: 0;
+    border-bottom: 1px solid black;
+    height: 30px;
+    width: 100px;
+    background-color: transparent;
+    color: black;
+}
+
+.items-filter-buttons button:first-of-type {
+    margin-left: 0;
+}
+
+.items-filter-buttons .selected{
+    background-color: #63c5da;
+    color: white;
+}

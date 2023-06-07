@@ -1,0 +1,7 @@
+.rating-container{
+    display: inline;
+    background-color: rgba(238, 238, 238,0.8);
+    border-radius: 5px;
+    color: green;
+    font-weight: bold;
+}

@@ -53,7 +53,7 @@
     display: flex;
     align-items: flex-end;
     height: 50px;
-    font-size: 1.4rem;
+    font-size: 1.7rem;
     letter-spacing: 2px;
     margin-bottom: 2rem;
     position: relative;
@@ -64,6 +64,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    font-size: 1.1rem;
 } 
 .footer-logo-container{
     position: absolute;
@@ -78,9 +79,6 @@
 .footer-logo{
     height: 180%;
     width: 180%;
-}
-.left-body{
-    justify-content:space-around ;
 }
 .left-body p:first-of-type{
     margin-top: 60px;
@@ -148,6 +146,7 @@
     letter-spacing: 2px;
     background-color:burlywood;
     color: white;
+    cursor: pointer;
 }
 @media (width<=1200px) {
     .footer{
@@ -167,7 +166,7 @@
         margin-top: 80px;
     }
     .left-body p:last-of-type{
-        margin-top: 20px;
+        margin-top: 40px;
     }
     .right{
         height: 45%;
@@ -206,8 +205,7 @@
         margin-top: 40px;
     }
     .left-body p:last-of-type{
-        margin-bottom: 20px;
-        margin-top: 0;
+        margin-top: 20px;
     }
     .middle{
         height: 56%;
