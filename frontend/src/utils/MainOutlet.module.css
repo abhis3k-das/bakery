@@ -3,7 +3,8 @@
     z-Index:100;
     position:relative;
     min-height: 100vh;
-    overflow:hidden,
+    overflow:hidden;
+    background-color: #DCDCDC;
 }
 
 @media (width<=1200px){
