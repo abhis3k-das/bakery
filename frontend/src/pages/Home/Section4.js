@@ -45,7 +45,6 @@ function Section4() {
             fullText={fullText}
         />)
     }
-    console.log(opacity)
     return (
         <div className={styles["page4Container"]}>
             <div className={styles["page4-img-container"]}>

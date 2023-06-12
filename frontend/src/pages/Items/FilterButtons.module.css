@@ -1,5 +1,7 @@
 .items-filter-buttons {
     margin: 2rem 0;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .items-filter-buttons button {
@@ -9,8 +11,20 @@
     border-bottom: 1px solid black;
     height: 30px;
     width: 100px;
+    min-width: 80px;
     background-color: transparent;
     color: black;
+}
+@media (width<=680px) {
+    .items-filter-buttons{
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap:0.5rem;
+    }
+    .items-filter-buttons button{
+        margin: 0;
+    }
 }
 
 .items-filter-buttons button:first-of-type {

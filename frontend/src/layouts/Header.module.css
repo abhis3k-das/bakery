@@ -209,7 +209,7 @@
 
 }
 
-@media (width<=480px) {
+@media (width<=640px) {
     .navbar-logo-container{
         display: none;
     }

@@ -4,12 +4,22 @@ import logo from "../../images/bakerylogo2.svg"
 import {TiShoppingCart} from "react-icons/ti"
 import {TfiMenuAlt, TfiClose} from "react-icons/tfi"
 import {NavLink} from "react-router-dom"
-import {useRef, useEffect, useState} from "react"
+import {useEffect, useState} from "react"
 import Section2 from "./Section2"
 import Section3 from "./Section3"
 import Section4 from "./Section4"
+import HomePageLogin from "../../components/HomePageLogin"
 function Home2() {
 	const [menuClicked, setMenuClicked] = useState(false)
+	useEffect(()=>{
+		const tempFunction = ()=>{
+			setMenuClicked(false);
+		}
+		window.addEventListener('resize',tempFunction);
+		return ()=>{
+			window.removeEventListener('resize',tempFunction)
+		}
+	},[])
 	return (
 		<>
 			<div className={styles["homePage-container"]}>
@@ -28,32 +38,34 @@ function Home2() {
 										}}
 									></img>
 								</div>
-								<div className={[styles["navbar"], menuClicked ? styles["showMenu"] : ""].join(" ")}>
-									<TfiClose className={[styles["close"], styles["icon"]].join(" ")} onClick={() => setMenuClicked(false)} />
-									<ul className={styles["homePage-section1-header-middle"]}>
-										<li>
-											<NavLink to="#">Home</NavLink>
-										</li>
-										<li>
-											<NavLink to="#">About</NavLink>
-										</li>
-										<li>
-											<NavLink to="#">Products</NavLink>
-										</li>
-										<li>
-											<NavLink to="#">Blog</NavLink>
-										</li>
-										<li>
-											<NavLink to="#">Contact</NavLink>
-										</li>
-										<li>
-											<NavLink to="#">Cart</NavLink>
-										</li>
-									</ul>
-								</div>
-								<div className={styles["homePage-section1-header-right"]}>
-									<TiShoppingCart className={[styles["cart"], styles["icon"]].join(" ")} />
-									<TfiMenuAlt className={[styles["menu"], styles["icon"]].join(" ")} onClick={() => setMenuClicked(true)} />
+								<div className={styles["navbar"]}>
+									{menuClicked === false && (
+										<TfiMenuAlt
+											className={[styles["menu"], styles["icon"]].join(" ")}
+											onClick={() => setMenuClicked(true)}
+										/>
+									)}
+									{menuClicked === true && (
+										<TfiClose
+											className={[styles["close"], styles["icon"]].join(" ")}
+											onClick={() => setMenuClicked(false)}
+										/>
+									)}
+									<div className={[styles["navbar-link"], menuClicked ? styles["show"] : ""].join(" ")}>
+										<NavLink to="#" className={styles['navbar-loginSignup']}>Login</NavLink>
+										<NavLink to="#" className={styles['navbar-loginSignup']}>SignUp</NavLink>
+										<NavLink
+											to="/home"
+											className={({isActive}) => (isActive ? styles["active"] : "")}
+										>
+											Home
+										</NavLink>
+										<NavLink to="/bakery/items">Products</NavLink>
+										<NavLink to="/bakery/about">About</NavLink>
+										<NavLink to="/bakery/blog">Blog</NavLink>
+										<NavLink to="/bakery/contact">Contact</NavLink>
+										<NavLink to="/bakery/cart">{menuClicked ? 'Cart'  : <TiShoppingCart className={[styles["cart"], styles["icon"]].join(" ")} />}</NavLink>
+									</div>
 								</div>
 							</div>
 							{/*------------------------------------------------------  */}
@@ -66,6 +78,9 @@ function Home2() {
 										<p>500 Terry Fancine Street</p>
 										<p>San Francisco , CA 94158</p>
 									</div>
+								</div>
+								<div className={styles["homePage-section1-textArea"]}>
+									<HomePageLogin />
 								</div>
 								{/* <div className={styles["homePage-section1-logo-container"]}>
 									<GotoProductsIcon />

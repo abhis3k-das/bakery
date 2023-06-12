@@ -28,9 +28,9 @@ function Header() {
 			setSlider(420)
 		} else if (route === "contactUs") {
 			setSlider(560)
-		}else{
-            setSlider(undefined)
-        }
+		} else {
+			setSlider(undefined)
+		}
 	}, [])
 	return (
 		<nav className={styles["navbar-container"]}>
@@ -52,6 +52,7 @@ function Header() {
 						onClick={() => setMenu(true)}
 					/>
 					<div className={[styles["navbar-menu-links"], menu === false ? styles["show"] : styles["close"]].join(" ")}>
+						{/* styles[close] does not exist for full scree i.e undefined */}
 						<div className={styles["links"]}>
 							<NavLink
 								onClick={() => setSlider(0)}
@@ -126,7 +127,12 @@ function Header() {
 						</NavLink>
 					</div>
 					<div className={styles["links"]}>
-						<NavLink to="login">Login</NavLink>
+						<NavLink
+							to="/home"
+							onClick={() => setSlider(undefined)}
+						>
+							Login
+						</NavLink>
 					</div>
 				</div>
 			</div>
