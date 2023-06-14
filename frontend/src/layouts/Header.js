@@ -3,6 +3,7 @@ import styles from "./Header.module.css"
 import logo from "../images/bakerylogo2.svg"
 import {AiOutlineMenu, AiOutlineClose} from "react-icons/ai"
 import {useEffect, useState} from "react"
+import { TiShoppingCart } from "react-icons/ti"
 function Header() {
 	const [menu, setMenu] = useState(true)
 	const [slider, setSlider] = useState()
@@ -100,12 +101,16 @@ function Header() {
 						<div className={styles["links"]}>
 							<NavLink
 								onClick={() => setSlider(140 * 4)}
-								to="contactUs"
+								to="cart"
 								className={({isActive}) => {
 									return isActive ? styles["activeLink"] : ""
 								}}
+								style={{
+									
+								}}
 							>
-								Contact us
+								Cart 
+								<TiShoppingCart/>
 							</NavLink>
 						</div>
 						<div className={[styles["slider"], styles["start-home"]].join(" ")}></div>
