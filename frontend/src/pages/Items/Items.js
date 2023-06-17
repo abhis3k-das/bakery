@@ -12,6 +12,9 @@ import ItemContainer from "./ItemsContainer"
 import CakeForm from "./CakeForm"
 import QuantityInput from "./QuantityInput"
 
+import { StoreContext } from "../../Context/store-context"
+import { useContext } from "react"
+
 function Items() {
 	const [selectedCategory, setSelectedCategory] = useState("all")
 	const [filteredData, setFilteredData] = useState(data)
@@ -19,6 +22,7 @@ function Items() {
 	const [selectedWeight, setSelectedWeight] = useState(0)
 	const [quantity, setQuantity] = useState(1)
 	const [message, setMessage] = useState("")
+	const store = useContext(StoreContext);
 	useEffect(() => {
 		if (quantity <= 0) {
 			setQuantity(1)
@@ -48,6 +52,9 @@ function Items() {
 		}
 	}, [selectedCategory, data])
 
+	const updateCart = ()=>{
+		store.updateCart(selectedItem,quantity,message,selectedWeight)
+	}
 	return (
 		<div className={styles["items-page"]}>
 			{selectedItem && (
@@ -60,7 +67,7 @@ function Items() {
 					</button>
 					{/* NOTE THE KEY MUST ME DIFFERENT IN BOTH PLACES */}
 					<motion.div
-						key={selectedItem?.id}
+						key={selectedItem?.id}            //different key
 						initial={{x: "-100vw"}}
 						animate={{x: 0}}
 						exit={{x: "-100vw"}}
@@ -70,7 +77,7 @@ function Items() {
 					></motion.div>
 					<motion.div
 						className={styles["item-details"]}
-						key={selectedItem?.id + "info"}
+						key={selectedItem?.id + "info"}   //  different key
 						initial={{opacity: 0}}
 						animate={{opacity: 1}}
 						exit={{opacity: 0}}
@@ -105,7 +112,7 @@ function Items() {
 										setMessage={setMessage}
 										price={sampleCake.price[selectedWeight]}
 									/>
-									<button name="addToCart">
+									<button name="addToCart" onClick={updateCart}>
 										Add <FaShoppingCart />{" "}
 									</button>
 								</div>

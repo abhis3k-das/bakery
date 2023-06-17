@@ -27,7 +27,7 @@ function Header() {
 			setSlider(280)
 		} else if (route === "about") {
 			setSlider(420)
-		} else if (route === "contactUs") {
+		} else if (route === "cart") {
 			setSlider(560)
 		} else {
 			setSlider(undefined)
@@ -104,9 +104,6 @@ function Header() {
 								to="cart"
 								className={({isActive}) => {
 									return isActive ? styles["activeLink"] : ""
-								}}
-								style={{
-									
 								}}
 							>
 								Cart 

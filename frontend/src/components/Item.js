@@ -22,8 +22,20 @@ function Item({data ,onClick}) {
             onClick={onClick}
         >
 			<h2 style={{color:'white'}}>{data.name}</h2>
-			<img src={data.url}>
-            </img>
+			<img src={data.url}></img>
+			<div style={{
+				position:'absolute',
+				bottom:'2rem',
+				right:'2rem',
+				border:'1px solid white',
+				height:'30px',
+				width:'30px',
+				display:'flex',
+				justifyContent:'center',
+				alignItems:'center',
+				fontSize:'1.4rem',
+				fontWeight:'bold',
+			}}>+</div>
 		</motion.div>
 	)
 }

@@ -1,0 +1,82 @@
+.cart-container {
+    box-sizing: border-box;
+    padding: 5rem;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-family: 'Cormorant Infant';
+}
+
+.cart-left,
+.cart-right {
+    margin: 1rem;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.cart-left {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    padding:1rem 0;
+}
+
+.cart-right {
+    width: 35%;
+    height: 400px;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+.cart-right .box h1{
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 2rem 0;
+    margin-bottom: 1rem;
+}
+.cart-right .content {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+.content span:first-child{
+    min-width: 130px;
+}
+.cart-right button{
+    width: 100%;
+    padding: 0.3rem 0;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    background-color: #6cbcd5;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+}
+
+
+.cart-right button:hover,
+.cart-right button:focus {
+  background-color: #4799b2;
+}
+
+.cart-right button:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.cart-right button:active {
+  background-color: #4799b2;
+  box-shadow: none;
+}
+@media (width<1050px) {
+    .cart-container{
+        padding: 5rem 3rem;
+    }
+}
+
+@media (width<850px) {
+    .cart-container{
+        padding: 3rem;
+    }
+}
