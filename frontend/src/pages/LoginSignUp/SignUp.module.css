@@ -1,0 +1,233 @@
+.signup-container {
+    padding: 6rem;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Cormorant Infant';
+    color: #fff;
+}
+
+.signup-container img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.signup-container img+div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.signup-card {
+    box-shadow: rgba(0, 0, 0, 1) 0px 5px 15px;
+    border: 1px solid white;
+    border-radius: 5px;
+    display: flex;
+    padding: 1rem 4rem;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 800px;
+    box-sizing: border-box;
+}
+
+.signup-card .header,
+.signup-card .body {
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.signup-card .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.signup-card .label {
+    font-weight: bold;
+    min-width: 160px;
+    box-sizing: border-box;
+}
+
+.signup-card .label span {
+    color: red;
+}
+
+.signup-card input {
+    min-width: 200px;
+    padding: 0.4rem;
+    box-sizing: border-box;
+}
+
+.username,
+.address,
+.email {
+    display: flex;
+    /* justify-content: space-between; */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.username>div,
+.address>div,
+.email>div {
+    flex: 1;
+}
+
+.username>div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.address input,
+.email input {
+    width: 100%;
+}
+
+.input-box p {
+    font-size: 0.85rem;
+    margin-bottom: 0.6rem;
+}
+
+.address>div>div:nth-of-type(3) {
+    display: flex;
+    justify-content: space-between;
+}
+
+.address>div>div:nth-of-type(3) input {
+    max-width: 200px;
+}
+
+.address .input-box:last-of-type {
+    width: 200px;
+}
+
+.address>div>div:nth-of-type(3) p,
+.username .input-box p {
+    max-width: 200px;
+}
+
+.phone {
+    display: flex;
+}
+.phone .input-box{
+    width: 100%;
+}
+.body {
+    padding-bottom: 2rem;
+}
+
+.body button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0.3rem 1rem;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    background-color: #6cbcd5;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.body button:hover {
+    background-color: #6badc1;
+}
+
+.invalid {
+    background-color: orange;
+}
+
+.signup-container .error {
+    color: orange;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.input-box:has(.error) input:focus {
+    background-color: orange;
+}
+
+@media (width<=1200px) {
+    .signup-card {
+        padding: 1rem 3rem;
+        width: 600px;
+    }
+
+    .signup-card .label {
+        min-width: 150px;
+    }
+
+    .signup-card input {
+        min-width: 160px;
+    }
+    .address>div>div:nth-of-type(3) input {
+        max-width: 160px;
+    }
+    
+    .address .input-box:last-of-type {
+        width: 160px;
+    }
+    .username input {
+        max-width: 160px;
+    }
+    .address>div>div:nth-of-type(3) p,
+    .username .input-box p {
+        max-width: 160px;
+    }
+    .phone input{
+        width: 160px;
+    }
+}
+
+@media (width<=780px) {
+    .username > div{
+        flex-direction: column;
+    }
+    .signup-card input {
+        min-width: 100%;
+    }
+    .phone .input-box{
+        width: 100%;
+    }
+    .address>div>div:nth-of-type(3) {
+        flex-direction: column;
+    }
+    .address>div>div:nth-of-type(3) input {
+        max-width: 100%;
+    }
+    
+    .address .input-box:last-of-type {
+        width: 100%;
+    }
+    .address>div>div:nth-of-type(3) p,
+    .username .input-box p {
+        max-width: 100%;
+    }
+    .body {
+        padding-bottom: 3rem;
+    }
+
+}

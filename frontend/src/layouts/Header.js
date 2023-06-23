@@ -2,11 +2,16 @@ import {NavLink, useLocation, useMatch} from "react-router-dom"
 import styles from "./Header.module.css"
 import logo from "../images/bakerylogo2.svg"
 import {AiOutlineMenu, AiOutlineClose} from "react-icons/ai"
-import {useEffect, useState} from "react"
-import { TiShoppingCart } from "react-icons/ti"
+import {useContext, useEffect, useState} from "react"
+import {TiShoppingCart} from "react-icons/ti"
+
+import {UserContext} from '../Context/user-context';
+import axios from 'axios'
 function Header() {
 	const [menu, setMenu] = useState(true)
 	const [slider, setSlider] = useState()
+
+	const store = useContext(UserContext);
 	const location = useLocation()
 	useEffect(() => {
 		const handleSlidingMenuReset = () => {
@@ -18,7 +23,6 @@ function Header() {
 		}
 	}, [])
 	useEffect(() => {
-		console.log(location)
 		const routeSperator = location.pathname.split("/")
 		const route = routeSperator[routeSperator.length - 1]
 		if (route === "items") {
@@ -33,6 +37,26 @@ function Header() {
 			setSlider(undefined)
 		}
 	}, [])
+
+	const logOut = async()=>{
+		try{
+			const response = await axios.get(
+			  'http://localhost:8000/logout',
+			  {
+				headers:{
+				  'Content-Type':'application/json',
+				  'Authorization':`Bearer ${store.accessToken}`
+				},
+				withCredentials:true,
+			  }
+			)
+			store.setUser('');
+			store.setAccessToken('');
+			console.log(response.data)
+		  }catch(e){
+			console.log(e.response)
+		  }
+	}
 	return (
 		<nav className={styles["navbar-container"]}>
 			<div className={styles["navbar-logo-container"]}>
@@ -106,8 +130,8 @@ function Header() {
 									return isActive ? styles["activeLink"] : ""
 								}}
 							>
-								Cart 
-								<TiShoppingCart/>
+								Cart
+								<TiShoppingCart />
 							</NavLink>
 						</div>
 						<div className={[styles["slider"], styles["start-home"]].join(" ")}></div>
@@ -119,24 +143,40 @@ function Header() {
 						)}
 					</div>
 				</div>
-				<div className={styles["navbar-right-links"]}>
-					<div className={styles["links"]}>
-						<NavLink
-							to="signUp"
-							onClick={() => setSlider(undefined)}
-						>
-							SignUp
-						</NavLink>
+				{  store.user?.length === 0 ? (
+					<div className={styles["navbar-right-links"]}>
+						<div className={styles["links"]}>
+							<NavLink
+								to="signUp"
+								onClick={() => setSlider(undefined)}
+								className={({isActive}) => (isActive ? styles["activeSL"] : "")}
+							>
+								SignUp
+							</NavLink>
+						</div>
+						<div className={styles["links"]}>
+							<NavLink
+								to="login"
+								onClick={() => setSlider(undefined)}
+								className={({isActive}) => (isActive ? styles["activeSL"] : "")}
+							>
+								Login
+							</NavLink>
+						</div>
 					</div>
-					<div className={styles["links"]}>
-						<NavLink
-							to="/home"
-							onClick={() => setSlider(undefined)}
-						>
-							Login
-						</NavLink>
+				) : (
+					<div className={styles["navbar-right-links"]}>
+						<div className={styles["links"]}>
+							<NavLink
+								to="#"
+								onClick={() => logOut()}
+								className={({isActive}) => (isActive ? styles["activeSL"] : "")}
+							>
+								Logout
+							</NavLink>
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 		</nav>
 	)

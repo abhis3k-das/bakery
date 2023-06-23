@@ -1,6 +1,5 @@
 import { createContext ,useState} from "react";
 export const StoreContext = createContext({
-    isLoggedIn:false,
     updateCart:(selectedItem,quantity,message,selectedWeight)=>{},
     cartItems:[],
     message:undefined,
@@ -11,7 +10,6 @@ export const StoreProvider = (props)=>{
     const [msg,setMessage] = useState("");
     const [wt,setWeight] = useState(1);
     const storeVariables = {
-        isLoggedIn:false,
         updateCart:(selectedItem,quantity,message,selectedWeight)=>{
             setCartItems((prev)=>{
                 let found = false;

@@ -216,8 +216,6 @@
         z-index: 900;
         background-color: #6cbcd5;
         border-bottom-left-radius: 25px;
-
-
     }
 
     .navbar-menu-links.show {
@@ -271,4 +269,7 @@
         left: 0;
         width: 100%;
     }
+}
+.activeSL{
+    border-bottom: 3px solid white;
 }

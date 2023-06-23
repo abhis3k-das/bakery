@@ -8,23 +8,29 @@ import Blog from './pages/Blog/Blog';
 import About from './pages/About/About';
 import Cart from './pages/Cart/Cart';
 import { StoreProvider } from './Context/store-context';
+import Login from './pages/LoginSignUp/Login';
+import SignUp from './pages/LoginSignUp/SignUp';
+import {UserContextProvider} from './Context/user-context'
 function App() {
   return (
-    <StoreProvider>
-      <Routes>
-        <Route path='/' element={<MainOutlet />}>
-          <Route path='home' element={<Home />}></Route>
-          <Route path='bakery' element={<HeaderOutlet/>}>
-            <Route path='items' element={<Items/>}></Route>
-            <Route path='about' element={<About/>}/>
-            <Route path='cart' element={<Cart/>}/>
-            <Route path='blog' element={<Blog/>}/>
-            <Route path='login' element={<h1>Login/signup</h1>}></Route>
-            <Route path='signup' element={<h1>Login/signup</h1>}></Route>
+    <UserContextProvider>
+
+      <StoreProvider>
+        <Routes>
+          <Route path='/' element={<MainOutlet />}>
+            <Route path='home' element={<Home />}></Route>
+            <Route path='bakery' element={<HeaderOutlet/>}>
+              <Route path='items' element={<Items/>}></Route>
+              <Route path='about' element={<About/>}/>
+              <Route path='cart' element={<Cart/>}/>
+              <Route path='blog' element={<Blog/>}/>
+              <Route path='login' element={<Login/>}></Route>
+              <Route path='signup' element={<SignUp/>}></Route>
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-    </StoreProvider>
+        </Routes>
+      </StoreProvider>
+    </UserContextProvider>
   )
 }
 
