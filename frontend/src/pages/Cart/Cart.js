@@ -1,5 +1,5 @@
 import styles from "./Cart.module.css"
-import {useContext, useState} from "react"
+import {useContext, useEffect, useState} from "react"
 import {StoreContext} from "../../Context/store-context"
 import CartItemCard from "./CartItemCard"
 const temp = [
@@ -42,23 +42,25 @@ const temp = [
 ]
 function Cart() {
 	const store = useContext(StoreContext)
-	const [itemList, setItemList] = useState(temp)
+	const [gst,setGst] = useState(80);
+	const [deliveryCost,setDeliveryCost] = useState(100);
 	const removeItem = (removeId) => {
 		window.scrollTo(0, 0)
-		setItemList((prev) => {
-			return prev.filter((each) => each.id !== removeId)
-		})
+		store.removeFromCart(removeId);
 	}
+
+	
 
 	return (
 		<div className={styles["cart-container"]}>
 			<div className={styles["cart-left"]}>
-				{itemList.map((each) => {
+				{store.cartItems.map((each) => {
 					return (
 						<CartItemCard
-							removeItem={removeItem.bind(this, each.id)}
-							key={each.id}
-							id={each.id}
+							removeItem={removeItem.bind(this, each.itemId)}
+							key={each.itemId}
+							id={each.itemId}
+							item={each}
 						/>
 					)
 				})}
@@ -71,26 +73,26 @@ function Cart() {
 					<div className={styles["box"]}>
 						<h2 className={styles["content"]}>
 							<span>Item Total : </span>
-							<span>₹800.00</span>
+							<span>₹{store.totalCost.toFixed(2)}</span>
 						</h2>
 					</div>
 					<div className={styles["box"]}>
 						<p className={styles["content"]}>
 							<span>Delivery fee : </span>
-							<span>₹80.00</span>
+							<span>₹{deliveryCost.toFixed(2)}</span>
 						</p>
 					</div>
 					<div className={styles["box"]}>
 						<p className={styles["content"]}>
 							<span>GST and Other Charges : </span>
-							<span>₹20.00</span>
+							<span>₹{gst.toFixed(2)}</span>
 						</p>
 					</div>
 					<hr></hr>
 					<div className={styles["box"]}>
 						<p className={styles["content"]}>
 							<span>Grand Total : </span>
-							<span>₹900.00</span>
+							<span>₹{(parseFloat(store.totalCost.toFixed(2)) + parseFloat(gst.toFixed(2)) + parseFloat(deliveryCost.toFixed(2))).toFixed(2)}</span>
 						</p>
 					</div>
 				</div>

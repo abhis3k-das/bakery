@@ -3,22 +3,115 @@ import {Swiper, SwiperSlide} from "swiper/react"
 import "swiper/css"
 import "swiper/css/pagination"
 import "swiper/css/navigation"
-import {useEffect, useMemo, useRef, useState} from "react"
+import {useEffect, useMemo, useRef, useState,useContext} from "react"
 import {Pagination, Navigation} from "swiper"
-
+import { StoreContext } from "../../Context/store-context"
 function Section3() {
-	const data = useMemo(
-		() => ({
-			pastry: ["P", "Q", "R", "S", "T", "V", "P", "Q", "R", "S", "T", "V"],
-			pancakes: ["P", "Q", "R", "S", "T", "V", "P", "Q", "R", "S", "T", "V"],
-			cookies: ["P", "Q", "R", "S", "T", "V", "P", "Q", "R", "S", "T", "V"],
-			cakes: ["P", "Q", "R", "S", "T", "V", "P", "Q", "R", "S", "T", "V"],
-		}),
-		[]
-	)
-	const [product, setProduct] = useState("pastry")
+
+	const [data,setData] = useState({
+		"dairy":[],
+		"cake":[],
+		"cookies":[],
+		"bread":[],
+	})
+	const store = useContext(StoreContext);
+	const [product, setProduct] = useState("cake")
     const header = useRef();
     const carousel = useRef();
+	useEffect(()=>{
+		console.log(store.products)
+		store?.products.forEach((each)=>{
+			if(each.category === "dairy"){
+				setData((prev)=>{
+					let temp = prev.dairy
+					if(temp.length === 0){
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+					}else{
+						temp.push(each)
+					}
+					return {
+						...prev,
+						"dairy":temp,
+					}
+				})
+			}else if(each.category === 'cake'){
+				setData((prev)=>{
+					let temp = prev.cake
+					if(temp.length === 0){
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+					}else{
+						temp.push(each)
+					}
+					return {
+						...prev,
+						"cake":temp,
+					}
+				})
+			}else if(each.category === 'cookie'){
+				setData((prev)=>{
+					let temp = prev.cookies
+					if(temp.length === 0){
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+					}else{
+						temp.push(each)
+					}
+					return {
+						...prev,
+						"cookies":temp,
+					}
+				})
+			}else if(each.category === 'bread'){
+				setData((prev)=>{
+					let temp = prev.bread
+					if(temp.length === 0){
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+						temp.push(each)
+					}else{
+						temp.push(each)
+					}
+					return {
+						...prev,
+						"bread":temp,
+					}
+				})
+			}
+		})
+	},[store.products])
     useEffect(()=>{
         const observer = new IntersectionObserver((entries)=>{
             entries.forEach((each)=>{
@@ -30,7 +123,7 @@ function Section3() {
         },{threshold:0})
         observer.observe(header.current);
         observer.observe(carousel.current);
-    })
+    },[])
 	const switchItemHandler = (type) => {
 		console.log(type)
 		setProduct(type)
@@ -49,19 +142,19 @@ function Section3() {
 					</h1>
 				</div>
 				<div className={styles["homePage-section3-items"]}>
-					<span onClick={switchItemHandler.bind(this, "pastry")} className={[product === "pastry" ? styles["homePage-section3-activeItem"] : "", styles["homePage-section3-item"]].join(" ")}>
+					<span onClick={switchItemHandler.bind(this, "dairy")} className={[product === "dairy" ? styles["homePage-section3-activeItem"] : "", styles["homePage-section3-item"]].join(" ")}>
 						{" "}
-						Pastry{" "}
+						Dairy{" "}
 					</span>
-					<span onClick={switchItemHandler.bind(this, "pancakes")} className={[product === "pancakes" ? styles["homePage-section3-activeItem"] : "", styles["homePage-section3-item"]].join(" ")}>
+					<span onClick={switchItemHandler.bind(this, "bread")} className={[product === "bread" ? styles["homePage-section3-activeItem"] : "", styles["homePage-section3-item"]].join(" ")}>
 						{" "}
-						Pancakes{" "}
+						Bread{" "}
 					</span>
 					<span onClick={switchItemHandler.bind(this, "cookies")} className={[product === "cookies" ? styles["homePage-section3-activeItem"] : "", styles["homePage-section3-item"]].join(" ")}>
 						{" "}
 						Cookies{" "}
 					</span>
-					<span onClick={switchItemHandler.bind(this, "cakes")} className={[product === "cakes" ? styles["homePage-section3-activeItem"] : "", styles["homePage-section3-item"]].join(" ")}>
+					<span onClick={switchItemHandler.bind(this, "cake")} className={[product === "cake" ? styles["homePage-section3-activeItem"] : "", styles["homePage-section3-item"]].join(" ")}>
 						{" "}
 						Cakes{" "}
 					</span>
@@ -103,13 +196,12 @@ function Section3() {
 					}}
 				>
 					{data[product].map((each, index) => {
-						let imgg = require("../../images/homePage3/cookieE.jpg")
 						return (
 							<SwiperSlide style={{margin: "50px"}} key={Math.random()*index}>
 								<div className={styles["homePage-section3-carousel-item"]}>
-									<img src={imgg} className={styles["homePage-section3-item-image"]} alt="..."></img>
+									<img src={each.image[0].url} className={styles["homePage-section3-item-image"]} alt="..."></img>
 									<span className={styles["homePage-section3-item-overlay"]}></span>
-									<span className={styles["homePage-section3-item-title"]}>Cookie</span>
+									<span className={styles["homePage-section3-item-title"]}>{each.item_name}</span>
 									<button onClick={addToCart}>+</button>
 								</div>
 							</SwiperSlide>

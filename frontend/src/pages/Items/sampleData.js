@@ -15,12 +15,12 @@ const sampleCake = {
 	},
 	category: "cake",
 	description: 'Taste the terrific tropic mango cake with a zesty blend of mango and mushy rich cream. Made of three rich cream layers and mango fillings, this cake is a tantalizing treat. The crest that is frosted with white chocolate shavings offers mango glaze which is made from fresh mango pulp. So, next time when life gives you lemons, throw it back and say "I said l wanted mango!"',
-	weights: [
-		{w: 0.5, c: 0},
-		{w: 1, c: 1},
-		{w: 1.5, c: 2},
-		{w: 2, c: 3},
-	],
+	weights:{
+		0:"500gm",
+		1:"1kg",
+		2:'1.5kg',
+		3:'2kg'
+	},
 	rating: 4.5,
 	reviews: [
 		{id: "1a", name: "Geeta", date: "23/05/2023", comment: "Excellent.Just Loved it", location: "Lucknow", occation: "Birthday", rating: 5},

@@ -35,6 +35,19 @@ const userSchema = new mongoose.Schema({
         type:String,
     },
     refreshTokens:[String],
+    orders:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Order'
+        }
+    ],
+    cart:[
+        {
+            type:Object,
+            default:{},
+        }
+    ]
 });
+
 const User = mongoose.model('User',userSchema);
 module.exports = User;

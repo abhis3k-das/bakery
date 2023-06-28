@@ -9,22 +9,22 @@ function FilterButtons({updateCategory,selectedCategory}) {
 				All
 			</button>
 			<button
-				onClick={updateCategory.bind(this, "itemA")}
-				className={selectedCategory === "itemA" ? styles["selected"] : ""}
+				onClick={updateCategory.bind(this, "cake")}
+				className={selectedCategory === "cake" ? styles["selected"] : ""}
 			>
-				Item A
+				Cake
 			</button>
 			<button
-				onClick={updateCategory.bind(this, "itemB")}
-				className={selectedCategory === "itemB" ? styles["selected"] : ""}
+				onClick={updateCategory.bind(this, "cookie")}
+				className={selectedCategory === "cookie" ? styles["selected"] : ""}
 			>
-				Item B
+				Cookie
 			</button>
 			<button
-				onClick={updateCategory.bind(this, "itemC")}
-				className={selectedCategory === "itemC" ? styles["selected"] : ""}
+				onClick={updateCategory.bind(this, "bread")}
+				className={selectedCategory === "bread" ? styles["selected"] : ""}
 			>
-				Item C
+				Bread
 			</button>
 		</div>
 	)

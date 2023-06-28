@@ -1,25 +1,36 @@
-import styles from './CakeForm.module.css';
-function CakeForm({selectedWeight,sampleCake,setSelectedWeight}) {
+import styles from "./CakeForm.module.css"
+function CakeForm({selectedWeight, data, setSelectedWeight, setCakeMessage, category}) {
 	return (
-		<div className={styles['cake-area']}>
+		<div className={styles["cake-area"]}>
 			<h1>Select Weight : </h1>
 			<div className={styles["item-weight-selector"]}>
-				{sampleCake.weights.map((each) => {
-					return (
-						<div
-                            key={each.c}
-							onClick={setSelectedWeight.bind(this, each.c)}
-							className={[styles['weight-box'] , selectedWeight === each.c ? styles["selected-weight"] : ""].join(" ")}
-						>
-							{each.w}kg
-						</div>
-					)
+				{Object.keys(data.weight).map((each) => {
+					if (data.availability[each] > 0) {
+						return (
+							<div
+								key={each}
+								onClick={setSelectedWeight.bind(this, each)}
+								className={[styles["weight-box"], selectedWeight === each ? styles["selected-weight"] : ""].join(" ")}
+							>
+								{data.weight[each]}
+							</div>
+						)
+					}
 				})}
 			</div>
-            <h1>Cake Message : </h1>   
-            <input type='text' maxLength={20} placeholder='Happy ...'/>
+			{category === "cake" && (
+				<>
+					<h1>Cake Message : </h1>
+					<input
+						type="text"
+						maxLength={20}
+						placeholder="Happy ..."
+						onChange={(e) => setCakeMessage(e.target.value)}
+					/>
+				</>
+			)}
 		</div>
 	)
 }
 
-export default CakeForm;
+export default CakeForm

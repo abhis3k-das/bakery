@@ -6,12 +6,14 @@ import {useContext, useEffect, useState} from "react"
 import {TiShoppingCart} from "react-icons/ti"
 
 import {UserContext} from '../Context/user-context';
+import { StoreContext } from "../Context/store-context"
 import axios from 'axios'
 function Header() {
 	const [menu, setMenu] = useState(true)
-	const [slider, setSlider] = useState()
+	const [slider, setSlider] = useState(0)
 
 	const store = useContext(UserContext);
+	const cart = useContext(StoreContext);
 	const location = useLocation()
 	useEffect(() => {
 		const handleSlidingMenuReset = () => {
@@ -25,7 +27,10 @@ function Header() {
 	useEffect(() => {
 		const routeSperator = location.pathname.split("/")
 		const route = routeSperator[routeSperator.length - 1]
-		if (route === "items") {
+		console.log(route)
+		if (route === "home"){
+			setSlider(0)
+		}else if (route === "items") {
 			setSlider(140)
 		} else if (route === "blog") {
 			setSlider(280)
@@ -132,10 +137,21 @@ function Header() {
 							>
 								Cart
 								<TiShoppingCart />
+								<span style={{
+									transform:'translateY(-5px)',
+									fontSize:'0.8rem',
+									color:'white',
+									fontWeight:'bold',
+									height:'20px',
+									width:'18px',
+									borderRadius:'50%',
+									textAlign:'center',
+									lineHeight:'20px',
+								}}>{cart.cartItems.length}</span>
 							</NavLink>
 						</div>
 						<div className={[styles["slider"], styles["start-home"]].join(" ")}></div>
-						{slider && (
+						{slider>=0 && (
 							<div
 								className={[styles["slider"]].join(" ")}
 								style={{left: `${slider}px`, width: "140px", backgroundColor: "#DCDCDC"}}
@@ -148,7 +164,7 @@ function Header() {
 						<div className={styles["links"]}>
 							<NavLink
 								to="signUp"
-								onClick={() => setSlider(undefined)}
+								onClick={() => setSlider(0)}
 								className={({isActive}) => (isActive ? styles["activeSL"] : "")}
 							>
 								SignUp
@@ -157,7 +173,7 @@ function Header() {
 						<div className={styles["links"]}>
 							<NavLink
 								to="login"
-								onClick={() => setSlider(undefined)}
+								onClick={() => setSlider(0)}
 								className={({isActive}) => (isActive ? styles["activeSL"] : "")}
 							>
 								Login

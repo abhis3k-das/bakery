@@ -1,8 +1,11 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import styles from "./CartItemCard.module.css"
 import {RiDeleteBin5Line} from 'react-icons/ri'
-function CartItemCard({removeItem,id}) {
-    const [quantity,setQuantity] = useState(1);
+import { StoreContext } from "../../Context/store-context";
+import { sampleCake } from "../Items/sampleData";
+function CartItemCard({removeItem,id,item}) {
+    const [quantity,setQuantity] = useState(item.quantity);
+    const cart = useContext(StoreContext);
     const onClickHandler = (state)=>{
         if(state){
             setQuantity((prev)=>{
@@ -23,18 +26,21 @@ function CartItemCard({removeItem,id}) {
             })
         }
     }
+    useEffect(()=>{
+        cart.addToCart(item.selectedItem,quantity,item?.message,item?.selectedWeight,item?.cakeMessage)
+    },[quantity])
 	return (
 		<div className={styles["item-card-container"]}>
 			<div className={styles["item-card-left"]}>
-                <img src="https://assets.winni.in/product/primary/2023/3/83221.jpeg?dpr=2&w=220" alt="..."></img>
+                <img src={item.selectedItem?.image[0].url ? "https://assets.winni.in/product/primary/2023/3/83221.jpeg?dpr=2&w=220" : ""} alt="..."></img>
             </div>
 			<div className={styles["item-card-right"]}>
 				<div className={styles['about']}>
-					<h1> Tropical Mango Delight {id}</h1>
+					<h1> {item.selectedItem.item_name}</h1>
 					<p>
-						Weight : <span>0.5kg</span>
+						Weight : <span>{item.selectedItem.weight[item?.selectedWeight]}</span>
 					</p>
-					<p> Price : ₹ <span>500.00</span></p>
+					<p> Price : ₹ <span>{item.selectedItem.price[item?.selectedWeight]}</span></p>
                     <p> Veg : <span>Yes</span></p>
 					<div className={styles["item-card-quantity-container"]}>
 						<p>Quantity : </p>
@@ -47,7 +53,7 @@ function CartItemCard({removeItem,id}) {
 				</div>
                 <div className={styles['total']}>
                     <div>
-                        <h1>Total : <span>₹ 500.00</span></h1>
+                        <h1>Total : <span>₹{item.selectedItem.price[item?.selectedWeight] * item?.quantity}</span></h1>
                     </div>
                     <div className={styles['button']}>
                         <button onClick={removeItem}><RiDeleteBin5Line style={{marginRight:'0.3rem'}}/><span>Remove</span></button>

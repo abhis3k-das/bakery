@@ -1,9 +1,10 @@
 .navbar-container {
     height: 3rem;
-    width: 100vw;
+    width: 100%;
     position: relative;
     background-color: #6cbcd5;
     box-sizing: border-box;
+    z-index: 999;
 }
 
 .navbar-container a {

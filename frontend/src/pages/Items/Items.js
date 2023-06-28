@@ -1,8 +1,7 @@
 import styles from "./Items.module.css"
 import {useEffect, useState} from "react"
 import {motion} from "framer-motion"
-import {data, sampleCake} from "./sampleData"
-
+import {sampleCake} from "./sampleData"
 import {FaShoppingCart} from "react-icons/fa"
 
 import Rating from "../../components/Rating"
@@ -12,17 +11,34 @@ import ItemContainer from "./ItemsContainer"
 import CakeForm from "./CakeForm"
 import QuantityInput from "./QuantityInput"
 
-import { StoreContext } from "../../Context/store-context"
-import { useContext } from "react"
+import {StoreContext} from "../../Context/store-context"
+import {useContext} from "react"
 
 function Items() {
+	const store = useContext(StoreContext)
 	const [selectedCategory, setSelectedCategory] = useState("all")
-	const [filteredData, setFilteredData] = useState(data)
+	const [filteredData, setFilteredData] = useState(store.products || [])
 	const [selectedItem, setSelectedItem] = useState()
+	const [isAvailable, setIsAvailable] = useState(false)
 	const [selectedWeight, setSelectedWeight] = useState(0)
 	const [quantity, setQuantity] = useState(1)
 	const [message, setMessage] = useState("")
-	const store = useContext(StoreContext);
+	const [cakeMessage, setCakeMessage] = useState("")
+	useEffect(() => {
+		console.log(store.products)
+		const findItem = store.cartItems.filter((each) => each.itemId === selectedItem?.id)[0]
+		if (findItem) {
+			setQuantity(findItem.quantity)
+		}
+		if (selectedItem) {
+			console.log(selectedItem)
+			const checkinSelectedItem = Object.keys(selectedItem.availability).filter((each) => selectedItem.availability[each] > 0)
+			setIsAvailable(checkinSelectedItem.length > 0)
+			if (checkinSelectedItem.length > 0) {
+				setSelectedWeight(checkinSelectedItem[0])
+			}
+		}
+	}, [selectedItem])
 	useEffect(() => {
 		if (quantity <= 0) {
 			setQuantity(1)
@@ -45,15 +61,15 @@ function Items() {
 	}
 	useEffect(() => {
 		if (selectedCategory === "all") {
-			setFilteredData(data)
+			setFilteredData(store.products)
 		} else {
-			const temp = data.filter((each) => each.name === selectedCategory)
+			const temp = store.products.filter((each) => each.category === selectedCategory)
 			setFilteredData(temp)
 		}
-	}, [selectedCategory, data])
+	}, [selectedCategory, store.products])
 
-	const updateCart = ()=>{
-		store.updateCart(selectedItem,quantity,message,selectedWeight)
+	const updateCart = () => {
+		store.addToCart(selectedItem, quantity, message, selectedWeight, cakeMessage)
 	}
 	return (
 		<div className={styles["items-page"]}>
@@ -67,52 +83,56 @@ function Items() {
 					</button>
 					{/* NOTE THE KEY MUST ME DIFFERENT IN BOTH PLACES */}
 					<motion.div
-						key={selectedItem?.id}            //different key
+						key={selectedItem?.id} //different key
 						initial={{x: "-100vw"}}
 						animate={{x: 0}}
 						exit={{x: "-100vw"}}
 						transition={{type: "spring", stiffness: 120}}
 						className={styles["item-img"]}
-						style={{backgroundColor: `${selectedItem?.color}`}}
+						style={{backgroundImage: `url(${selectedItem && selectedItem.image[0].url})`, backgroundSize: "cover", backgroundPosition: "center"}}
 					></motion.div>
 					<motion.div
 						className={styles["item-details"]}
-						key={selectedItem?.id + "info"}   //  different key
+						key={selectedItem?.id + "info"} //  different key
 						initial={{opacity: 0}}
 						animate={{opacity: 1}}
 						exit={{opacity: 0}}
 						transition={{duration: 1}}
 					>
 						<h1 name="title">
-							{sampleCake.title} <Rating rating={sampleCake.rating} />
+							{selectedItem.item_name} <Rating rating={5} />
 						</h1>
 						<div className={styles["item-data-container"]}>
 							<div className={styles["item-info-container"]}>
 								<p name="stock">
-									Availability : <span style={{color: sampleCake.inStock[selectedWeight] > 0 ? "green" : "red", fontWeight: "bold"}}>{sampleCake.inStock[selectedWeight] > 0 ? "In Stock." : "Currently out of stock."}</span>
+									Availability : <span style={{color: isAvailable ? "green" : "red", fontWeight: "bold"}}>{isAvailable ? "In Stock." : "Currently out of stock."}</span>
 								</p>
 
 								<p name="price">
-									₹ {sampleCake.price[selectedWeight]} <span style={{fontWeight: "100", fontSize: "1.3rem", opacity: "0.8"}}>(Inclusive of tax)</span>
+									₹ {selectedItem.price[selectedWeight]} <span style={{fontWeight: "100", fontSize: "1.3rem", opacity: "0.8"}}>(Inclusive of tax)</span>
 								</p>
 								<h2>Product Description:</h2>
-								<p>{sampleCake.description}</p>
+								<p>{selectedItem.description}</p>
 								<div className={styles["item-form"]}>
-									{sampleCake.category === "cake" && (
-										<CakeForm
-											selectedWeight={selectedWeight}
-											sampleCake={sampleCake}
-											setSelectedWeight={setSelectedWeight}
-										/>
-									)}
+									<CakeForm
+										selectedWeight={selectedWeight}
+										data={selectedItem}
+										setSelectedWeight={setSelectedWeight}
+										setCakeMessage={setCakeMessage}
+										category={selectedItem.category}
+									/>
+
 									<QuantityInput
 										quantity={quantity}
 										setQuantity={setQuantity}
 										message={message}
 										setMessage={setMessage}
-										price={sampleCake.price[selectedWeight]}
+										price={selectedItem.price[selectedWeight]}
 									/>
-									<button name="addToCart" onClick={updateCart}>
+									<button
+										name="addToCart"
+										onClick={updateCart}
+									>
 										Add <FaShoppingCart />{" "}
 									</button>
 								</div>

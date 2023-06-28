@@ -4,8 +4,12 @@ const cors = require("./cors/index")
 const cookieParser = require("cookie-parser")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const multer = require("multer")
+const {storage} = require("./cloudinary")
+const upload = multer({storage})
 const mongoose = require("mongoose")
 const User = require("./models/User")
+const Product = require("./models/Product")
 const mongoUrl = "mongodb+srv://abhis3k:v9KTK8NfiKU6qOcx@bakery.ys4rene.mongodb.net/bakery?retryWrites=true&w=majority"
 require("dotenv").config()
 app.use(express.urlencoded({extended: true}))
@@ -123,51 +127,75 @@ app.post("/login", async (req, res) => {
 	if (!compare) {
 		return res.status(401).json({message: "UnAuthorized (Password)"})
 	}
-	const refreshToken = jwt.sign({email: email}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: "30s "})
+	const refreshToken = jwt.sign({email: email}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: "15m"})
 	const accessToken = jwt.sign({email: email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15s"}) //30m-minutes 1w-week 1h-hour
 	user.refreshTokens.push(refreshToken)
 	await user.save()
 	res.cookie("jwt", refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true})
 	return res.status(200).json({message: "Logged In", refreshToken, accessToken})
 })
-app.get('/refresh',async(req,res)=>{
-    const cookies = req.cookies;
-    const refreshToken = cookies?.jwt;
-    const user = await User.findOne({refreshTokens:refreshToken});
-    if(!user){
-        return res.status(403).json({"message":'Wrong Tokken Forbidden'})
-    }
-    jwt.verify(
-        refreshToken,
-        process.env.REFRESH_TOKEN_SECRET,
-        (err,decoded)=>{
-            if(err || user.email !== decoded.email){
-                return res.status(403).json({"message":'User/Token didnt Match Forbidden'})
-            }
-            const accessToken = jwt.sign(
-                {"username":decoded.username},
-                process.env.ACCESS_TOKEN_SECRET,
-                {expiresIn:'15s'}
-            )
-            return res.status(200).json({"message":'New Token Generated',accessToken,"user":user.email});
-        }
-    )
+app.get("/refresh", async (req, res) => {
+	const cookies = req.cookies
+	const refreshToken = cookies?.jwt
+	const user = await User.findOne({refreshTokens: refreshToken})
+	if (!user) {
+		return res.status(403).json({message: "Wrong Tokken Forbidden"})
+	}
+	jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+		if (err || user.email !== decoded.email) {
+			return res.status(403).json({message: "User/Token didnt Match Forbidden"})
+		}
+		const accessToken = jwt.sign({username: decoded.username}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15s"})
+		return res.status(200).json({message: "New Token Generated", accessToken, user: user.email})
+	})
 })
-app.get('/logout',verifyJWT,async(req,res)=>{
-    const cookie = req.cookies;
-    if(!cookie?.jwt){
-        return res.status(204).json({"message":'Not logged In'});
-    }
-    const refreshToken = cookie?.jwt;
-    const user = await User.findOne({refreshTokens:refreshToken});
-    res.clearCookie('jwt',{httpOnly:true,maxAge:24*60*60*1000,sameSite:'none',secure:true});
-    if(!user){
-        return res.status(403).json({"message":'Tokken not found In Db / relogin'})
-    }
-    user.refreshTokens = user.refreshTokens.filter((each)=>each !== refreshToken);
-    await user.save();
-    return res.status(204).json({"message":'Logged out and Tokken Cleared'})
-
+app.get("/logout", verifyJWT, async (req, res) => {
+	const cookie = req.cookies
+	if (!cookie?.jwt) {
+		return res.status(204).json({message: "Not logged In"})
+	}
+	const refreshToken = cookie?.jwt
+	const user = await User.findOne({refreshTokens: refreshToken})
+	res.clearCookie("jwt", {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true})
+	if (!user) {
+		return res.status(403).json({message: "Tokken not found In Db / relogin"})
+	}
+	user.refreshTokens = user.refreshTokens.filter((each) => each !== refreshToken)
+	await user.save()
+	return res.status(204).json({message: "Logged out and Tokken Cleared"})
+})
+app.post("/addNewProduct", upload.array("image"), async (req, res) => {
+	console.log(req.body, req.files)
+	let {item_name, description, weightObject, priceObject, quantityObject, category} = req.body
+	weightObject = JSON.parse(weightObject)
+	quantityObject = JSON.parse(quantityObject)
+	priceObject = JSON.parse(priceObject)
+	try {
+		const newProduct = new Product({
+			item_name,
+			description,
+			category,
+			image: {
+				url: req.files[0].path,
+				original_name: req.files[0].originalname,
+				current_filename: req.files[0].filename,
+			},
+			weight: weightObject,
+			availability: quantityObject,
+			price: priceObject,
+		})
+		await newProduct.save()
+		res.status(200).json({"message": "added new product"})
+	} catch (e) {
+		res.status(500).json({"message":"Failed to add new product"})
+	}
+})
+app.get("/getProducts",async(req,res)=>{
+	const response = await Product.find();
+	if(!response){
+		return res.status(500).json({"message":'Failed to get Products'})
+	}
+	return res.status(200).json({"message":'Products fetched',"products":response})
 })
 app.get("/data", async (req, res) => {
 	const dataList = await User.find()
