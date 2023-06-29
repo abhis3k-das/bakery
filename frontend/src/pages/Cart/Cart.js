@@ -2,44 +2,6 @@ import styles from "./Cart.module.css"
 import {useContext, useEffect, useState} from "react"
 import {StoreContext} from "../../Context/store-context"
 import CartItemCard from "./CartItemCard"
-const temp = [
-	{
-		id: "1",
-		quantity: "5",
-		weightId: "2",
-		title: "a",
-	},
-	{
-		id: "2",
-		quantity: "5",
-		weightId: "2",
-		title: "b",
-	},
-	{
-		id: "3",
-		quantity: "5",
-		weightId: "2",
-		title: "c",
-	},
-	{
-		id: "4",
-		quantity: "5",
-		weightId: "2",
-		title: "d",
-	},
-	{
-		id: "5",
-		quantity: "5",
-		weightId: "2",
-		title: "e",
-	},
-	{
-		id: "6",
-		quantity: "5",
-		weightId: "2",
-		title: "f",
-	},
-]
 function Cart() {
 	const store = useContext(StoreContext)
 	const [gst,setGst] = useState(80);

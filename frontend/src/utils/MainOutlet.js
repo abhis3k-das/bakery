@@ -27,7 +27,8 @@ function MainOutlet() {
 			}
 		}
 		checkForLoggedInUser()
-	}, [])
+		setInterval(checkForLoggedInUser,14*1000) // the time should be same or just less than the expiry time of accestoken
+	},[])
 	useEffect(() => {
 		const getProducts = async () => {
 			try {

@@ -23,6 +23,7 @@
 
 .weight-box {
     height: 30px;
+    max-width: 100px;
     border: 1px solid black;
     text-align: center;
     line-height: 30px;

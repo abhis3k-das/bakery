@@ -11,6 +11,7 @@ const productSchema = new mongoose.Schema({
         original_name:String,
         current_filename:String,
     }],
+    overallRating:Number,
     weight:{
         type:Object,
         default:{},

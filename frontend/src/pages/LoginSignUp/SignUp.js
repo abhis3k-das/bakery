@@ -1,4 +1,5 @@
 import {useState, useRef, useEffect} from "react"
+import { useNavigate } from "react-router-dom";
 import styles from "./SignUp.module.css"
 import axios from "axios";
 function SignUp() {
@@ -37,6 +38,8 @@ function SignUp() {
 	const emailRef = useRef()
 	const passwordRef = useRef()
 	const confirmPasswordRef = useRef()
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		fnameRef.current.focus()
@@ -135,10 +138,14 @@ function SignUp() {
 				},
 				
 			)
-			console.log(response.data)
+			console.log(response)
+			alert(response.data.message)
+			navigate("/login")
 		}
 		catch(e){
 			console.log(e);
+			alert(e.response?.data?.message)
+			return
 		}
 		setFname("")
 		setLname("")

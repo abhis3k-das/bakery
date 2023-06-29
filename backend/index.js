@@ -10,6 +10,7 @@ const upload = multer({storage})
 const mongoose = require("mongoose")
 const User = require("./models/User")
 const Product = require("./models/Product")
+const Review = require("./models/Reviews")
 const mongoUrl = "mongodb+srv://abhis3k:v9KTK8NfiKU6qOcx@bakery.ys4rene.mongodb.net/bakery?retryWrites=true&w=majority"
 require("dotenv").config()
 app.use(express.urlencoded({extended: true}))
@@ -36,12 +37,13 @@ const verifyJWT = (req, res, next) => {
 	const authHeader = req.headers["authorization"] || req.headers["Authorization"]
 	console.log(req.headers["authorization"])
 	if (!authHeader) {
-		return res.status(401).json({message: "UnAuthorized"})
+		return res.status(401).json({message: "UnAuthorized Header Missing"})
 	}
 	const token = authHeader.split(" ")[1]
+	console.log(token)
 	jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
 		if (err) {
-			return res.status(403).json("Invalid Token/Not Logged In")
+			return res.status(403).json({message: "You are not Logged In"})
 		}
 		req.email = decoded.email
 		next()
@@ -49,7 +51,7 @@ const verifyJWT = (req, res, next) => {
 }
 app.post("/register", async (req, res) => {
 	const {fname, lname, add_1, add_2, state, city, pin, password, phNo, email} = req.body
-	if (!fname || !lname || !add_1 || !state || !city || !password || !phNo || !email) {
+	if (!fname || !add_1 || !state || !city || !password || !phNo || !email) {
 		return res.status(400).json({message: "Invalid Data Received"})
 	}
 	const nameRegex = /^[A-Za-z]+$/
@@ -112,7 +114,7 @@ app.post("/register", async (req, res) => {
 		password: hashedPassword,
 	})
 	await newUser.save()
-	return res.status(200).json({message: "Registered"})
+	return res.status(200).json({"message": "Registered Successfully"})
 })
 app.post("/login", async (req, res) => {
 	const {email, password} = req.body
@@ -132,7 +134,7 @@ app.post("/login", async (req, res) => {
 	user.refreshTokens.push(refreshToken)
 	await user.save()
 	res.cookie("jwt", refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true})
-	return res.status(200).json({message: "Logged In", refreshToken, accessToken})
+	return res.status(200).json({message: "Logged In", accessToken, user: user._id})
 })
 app.get("/refresh", async (req, res) => {
 	const cookies = req.cookies
@@ -146,7 +148,7 @@ app.get("/refresh", async (req, res) => {
 			return res.status(403).json({message: "User/Token didnt Match Forbidden"})
 		}
 		const accessToken = jwt.sign({username: decoded.username}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15s"})
-		return res.status(200).json({message: "New Token Generated", accessToken, user: user.email})
+		return res.status(200).json({message: "New Token Generated", accessToken, user: user._id})
 	})
 })
 app.get("/logout", verifyJWT, async (req, res) => {
@@ -185,17 +187,107 @@ app.post("/addNewProduct", upload.array("image"), async (req, res) => {
 			price: priceObject,
 		})
 		await newProduct.save()
-		res.status(200).json({"message": "added new product"})
+		res.status(200).json({message: "added new product"})
 	} catch (e) {
-		res.status(500).json({"message":"Failed to add new product"})
+		res.status(500).json({message: "Failed to add new product"})
 	}
 })
-app.get("/getProducts",async(req,res)=>{
-	const response = await Product.find();
-	if(!response){
-		return res.status(500).json({"message":'Failed to get Products'})
+app.get("/getProducts", async (req, res) => {
+	const response = await Product.find().populate({
+		path: "reviews",
+		options: {sort: {posted_On: -1}},
+	})
+	if (!response) {
+		return res.status(500).json({message: "Failed to get Products"})
 	}
-	return res.status(200).json({"message":'Products fetched',"products":response})
+	return res.status(200).json({message: "Products fetched", products: response})
+})
+app.post("/addReview", verifyJWT, async (req, res) => {
+	console.log(req.body)
+	const user = await User.findOne({_id: req.body.user_Id})
+	const product = await Product.findOne({_id: req.body.product_Id})
+	if (!user) {
+		return res.status(404).json({message: "User does not exist"})
+	}
+	if (!product) {
+		return res.status(404).json({message: "Product does not exist"})
+	}
+	try {
+		const newReview = new Review({
+			review: req.body.review,
+			user_Id: new mongoose.Types.ObjectId(req.body.user_Id),
+			product_Id: new mongoose.Types.ObjectId(req.body.product_Id),
+			rating: req.body.rating,
+			occation: req.body.occation,
+			posted_By: `${user.firstName} ${user.lastName}`,
+			from: req.body.state,
+		})
+		const response = await newReview.save()
+		product.reviews.push(response._id)
+		const updatedData = await (
+			await product.save()
+		).populate({
+			path: "reviews",
+			options: {sort: {posted_On: -1}},
+		})
+
+		return res.status(200).json({message: "Review Added", updatedData})
+	} catch (e) {
+		console.log(e)
+		return res.status(500).json({message: "Failed to Create Review"})
+	}
+})
+app.post("/updateReview", verifyJWT, async (req, res) => {
+	const user = await User.findOne({_id: req.body.user_Id})
+	const review = await Review.findOne({_id:req.body.review_Id})
+	if (!user) {
+		return res.status(404).json({message: "User does not exist"})
+	}
+	if (!review) {
+		return res.status(404).json({message: "Review does not exist"})
+	}
+	if(!user._id.equals(review.user_Id)){
+		return res.status(500).json({"message":"Only the review owner is allowed to make changes"})
+	}
+	const updatedReview = await Review.findOneAndUpdate(
+		{_id: req.body.review_Id},
+		{
+			review: req.body.review,
+			rating: req.body.rating,
+			occation: req.body.occation,
+			posted_By: `${user.firstName} ${user.lastName}`,
+			from: req.body.state,
+		},{
+			new:true,
+		}
+	)
+	const updatedData = await Product.findOne({_id: req.body.product_Id}).populate({
+		path:"reviews",
+		options: {sort: {posted_On: -1}},
+	})
+	return res.status(200).json({"message": "Review updated",updatedData})
+})
+app.delete("/review/:id",verifyJWT,async(req,res)=>{
+	console.log("herer",req.body)
+	console.log(req.params.id)
+	const user = await User.findOne({_id:req.body.user_Id})
+	const review = await Review.findOne({_id:req.params.id})
+	if(!user){
+		return res.status(404).json({"message":"User not found"})
+	}
+	if(!review){
+		return res.status(404).json({"message":"Review not found"})
+	}
+	if(!user._id.equals(review.user_Id)){
+		return res.status(500).json({"message":"Only review owner is allowed to delete review"})
+	}
+	const updatedData = await Product.findOneAndUpdate({_id:review.product_Id},{ $pull: { reviews: review._id }},{new:true}).populate({
+		path:"reviews",
+		options:{sort:{posted_On:-1}}
+	})
+	await Review.findOneAndDelete({_id:req.params.id})
+
+	return res.status(200).json({"message":"review deleted",updatedData})
 })
 app.get("/data", async (req, res) => {
 	const dataList = await User.find()

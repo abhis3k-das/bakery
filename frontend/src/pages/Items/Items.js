@@ -13,6 +13,7 @@ import QuantityInput from "./QuantityInput"
 
 import {StoreContext} from "../../Context/store-context"
 import {useContext} from "react"
+import AddReview from "./AddReview"
 
 function Items() {
 	const store = useContext(StoreContext)
@@ -24,6 +25,10 @@ function Items() {
 	const [quantity, setQuantity] = useState(1)
 	const [message, setMessage] = useState("")
 	const [cakeMessage, setCakeMessage] = useState("")
+
+	const [edit,setEdit] = useState(false)
+	const [editReviewData,setEditReviewData] = useState();
+
 	useEffect(() => {
 		console.log(store.products)
 		const findItem = store.cartItems.filter((each) => each.itemId === selectedItem?.id)[0]
@@ -49,6 +54,15 @@ function Items() {
 			return
 		}
 	}, [quantity])
+
+	useEffect(() => {
+		if (selectedCategory === "all") {
+			setFilteredData(store.products)
+		} else {
+			const temp = store.products.filter((each) => each.category === selectedCategory)
+			setFilteredData(temp)
+		}
+	}, [selectedCategory, store.products])
 	const updateCategory = (category) => {
 		setSelectedCategory(category)
 	}
@@ -59,15 +73,6 @@ function Items() {
 		})
 		setSelectedItem(item)
 	}
-	useEffect(() => {
-		if (selectedCategory === "all") {
-			setFilteredData(store.products)
-		} else {
-			const temp = store.products.filter((each) => each.category === selectedCategory)
-			setFilteredData(temp)
-		}
-	}, [selectedCategory, store.products])
-
 	const updateCart = () => {
 		store.addToCart(selectedItem, quantity, message, selectedWeight, cakeMessage)
 	}
@@ -136,24 +141,29 @@ function Items() {
 										Add <FaShoppingCart />{" "}
 									</button>
 								</div>
-							</div>
-							{sampleCake.reviews.length > 0 && (
 								<div className={styles["item-reviews-container"]}>
 									<h1>Customer Review</h1>
-									{sampleCake.reviews
-										.filter((each, index) => {
-											return index < 5
-										})
-										.map((each) => {
-											return (
-												<Review
-													data={each}
-													key={each.id}
-												/>
-											)
-										})}
+									<AddReview
+										product_id={selectedItem._id}
+										setSelectedItem={setSelectedItem}
+										setEdit={setEdit}
+										edit={edit}
+										setEditReviewData={setEditReviewData}
+										editReviewData={editReviewData}
+									/>
+									{selectedItem.reviews.map((each) => {
+										return (
+											<Review
+												reviewData={each}
+												key={each._id}
+												setEdit={setEdit}
+												setEditReviewData={setEditReviewData}
+												setSelectedItem={setSelectedItem}
+											/>
+										)
+									})}
 								</div>
-							)}
+							</div>
 						</div>
 					</motion.div>
 				</div>
