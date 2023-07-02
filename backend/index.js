@@ -8,10 +8,11 @@ const cookieParser = require("cookie-parser")
 // const {storage} = require("./cloudinary")
 // const upload = multer({storage})
 const mongoose = require("mongoose")
-// const User = require("./models/User")
+const User = require("./models/User")
 // const Product = require("./models/Product")
 // const Review = require("./models/Reviews")
 const mongoUrl = process.env.MONGOOSE_URL
+const PORT = process.env.PORT || 8000
 require("dotenv").config()
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
@@ -303,6 +304,6 @@ app.get("/data", async (req, res) => {
 app.all("*", (req, res) => {
 	return res.status(404).json({message: "Page Not Found"})
 })
-app.listen(8000, () => {
+app.listen(PORT, () => {
 	console.log("Connected to Port 8000")
 })
