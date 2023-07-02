@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react"
 import styles from "./CartItemCard.module.css"
 import {RiDeleteBin5Line} from 'react-icons/ri'
 import { StoreContext } from "../../Context/store-context";
-import { sampleCake } from "../Items/sampleData";
 function CartItemCard({removeItem,id,item}) {
     const [quantity,setQuantity] = useState(item.quantity);
     const cart = useContext(StoreContext);
@@ -41,7 +40,9 @@ function CartItemCard({removeItem,id,item}) {
 						Weight : <span>{item.selectedItem.weight[item?.selectedWeight]}</span>
 					</p>
 					<p> Price : ₹ <span>{item.selectedItem.price[item?.selectedWeight]}</span></p>
-                    <p> Veg : <span>Yes</span></p>
+                    <p> Veg : <span>{item.selectedItem?.veg}</span></p>
+                    <p> Message : <span>{item?.message.length === 0 ? '" "' : item?.message}</span></p>
+                    {item.selectedItem?.category === "cake" && (<p> Cake Message : <span>{item.cakeMessage}</span></p>)}
 					<div className={styles["item-card-quantity-container"]}>
 						<p>Quantity : </p>
 						<div className={styles["item-card-quantity-handler"]}>

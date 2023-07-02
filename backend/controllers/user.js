@@ -65,6 +65,7 @@ module.exports.signUp = async (req, res) => {
 		postalCode: pin,
 		email: email,
 		password: hashedPassword,
+		phoneNumber:phNo,
 	})
 	await newUser.save()
 	return res.status(200).json({message: "Registered Successfully"})
@@ -83,28 +84,39 @@ module.exports.logIn = async (req, res) => {
 	if (!compare) {
 		return res.status(401).json({message: "UnAuthorized (Password)"})
 	}
-	const refreshToken = jwt.sign({email: email}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: "15m"})
+	const refreshToken = jwt.sign({email: email}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: "1d"})
 	const accessToken = jwt.sign({email: email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15s"}) //30m-minutes 1w-week 1h-hour
 	user.refreshTokens.push(refreshToken)
 	await user.save()
 	res.cookie("jwt", refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true})
 	return res.status(200).json({message: "Logged In", accessToken, user: user._id})
 }
-
 module.exports.autoRelogin = async (req, res) => {
 	const cookies = req.cookies
 	const refreshToken = cookies?.jwt
 	const user = await User.findOne({refreshTokens: refreshToken})
+
 	if (!user) {
-		return res.status(403).json({message: "Wrong Tokken Forbidden"})
+		return res.status(403).json({message: "Wrong Token Forbidden"})
 	}
-	jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-		if (err || user.email !== decoded.email) {
-			return res.status(403).json({message: "User/Token didnt Match Forbidden"})
-		}
-		const accessToken = jwt.sign({username: decoded.username}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15s"})
-		return res.status(200).json({message: "New Token Generated", accessToken, user: user._id})
-	})
+
+	try {
+		jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, decoded) => {
+			if (err) {
+				await User.updateOne({_id: user._id}, {$pull: {refreshTokens: refreshToken}}).exec()
+				return res.status(403).json({message: "Token Expired Forbidden"})
+			}
+
+			if (user.email !== decoded.email) {
+				return res.status(403).json({message: "User/Token didn't Match Forbidden"})
+			}
+
+			const accessToken = jwt.sign({username: decoded.username}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15s"})
+			return res.status(200).json({message: "New Token Generated", accessToken, user: user._id})
+		})
+	} catch (err) {
+		return res.status(500).json({message: "Internal Server Error"})
+	}
 }
 
 module.exports.logOut = async (req, res) => {
@@ -121,4 +133,59 @@ module.exports.logOut = async (req, res) => {
 	user.refreshTokens = user.refreshTokens.filter((each) => each !== refreshToken)
 	await user.save()
 	return res.status(204).json({message: "Logged out and Tokken Cleared"})
+}
+
+module.exports.updateCart = async (req, res) => {
+	try{
+		const {user_Id, cart_items} = req.body
+		if (!user_Id || !cart_items) {
+			return res.status(500).json({message: "Data Missing"})
+		}
+		const user = await User.findOne({_id: user_Id})
+		if (!user) {
+			return res.status(404).json({message: "User not found"})
+		}
+		user.cart = cart_items
+		await user.save()
+		return res.status(200).json({message: "Cart Updated"})
+	}catch (error) {
+		return res.status(500).json({message: "Internal Server Error"})
+	}
+}
+
+module.exports.getCart = async (req, res) => {
+	try {
+		const user_Id = req.params.id
+		const user = await User.findOne({_id: user_Id})
+		if (!user) {
+			return res.status(404).json({message: "User Not Found"})
+		}
+		const cart_items = user.cart
+		return res.status(200).json({message: "Cart Details Fetched", cart_items})
+	} catch (error) {
+		return res.status(500).json({message: "Internal Server Error"})
+	}
+}
+
+
+module.exports.getUserAddress = async(req,res)=>{
+	try{
+		console.log(req.params.id)
+		const user = await User.findOne({_id:req.params.id});
+		if(!user){
+			return res.status(404).json({"message":"User not found"})
+		}
+		const address = {
+			firstName : user.firstName,
+			lastName:user.lastName,
+			address:user.address_1,
+			state:user.state,
+			city:user.city,
+			postalCode:user.postalCode,
+			phoneNumber:user.phoneNumber,
+		}
+		return res.status(200).json({"message":"Success",address})
+	}catch(err){
+		return res.status(500).json({"message":"Internal Server Error"})
+	}
 }

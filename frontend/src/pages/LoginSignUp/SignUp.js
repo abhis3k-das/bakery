@@ -117,7 +117,7 @@ function SignUp() {
 		}
 		try{
 			const response = await axios.post(
-				"http://localhost:8000/register",
+				`${process.env.REACT_APP_BASE_URL}/register`,
 				JSON.stringify({
 					fname,
 					lname,

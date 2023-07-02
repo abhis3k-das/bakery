@@ -1,20 +1,22 @@
-import {NavLink, useLocation, useMatch} from "react-router-dom"
+import {NavLink, useLocation, useNavigate} from "react-router-dom"
 import styles from "./Header.module.css"
 import logo from "../images/bakerylogo2.svg"
 import {AiOutlineMenu, AiOutlineClose} from "react-icons/ai"
 import {useContext, useEffect, useState} from "react"
 import {TiShoppingCart} from "react-icons/ti"
 
-import {UserContext} from '../Context/user-context';
-import { StoreContext } from "../Context/store-context"
-import axios from 'axios'
+import {UserContext} from "../Context/user-context"
+import {StoreContext} from "../Context/store-context"
+import axios from "axios"
 function Header() {
 	const [menu, setMenu] = useState(true)
-	const [slider, setSlider] = useState(0)
 
-	const store = useContext(UserContext);
-	const cart = useContext(StoreContext);
+
+	const store = useContext(UserContext)
+	const cart = useContext(StoreContext)
+	const {slider,setSlider} = cart
 	const location = useLocation()
+	const navigate = useNavigate();
 	useEffect(() => {
 		const handleSlidingMenuReset = () => {
 			setMenu(true)
@@ -28,39 +30,39 @@ function Header() {
 		const routeSperator = location.pathname.split("/")
 		const route = routeSperator[routeSperator.length - 1]
 		console.log(route)
-		if (route === "home"){
+		if (route === "home") {
 			setSlider(0)
-		}else if (route === "items") {
+		} else if (route === "items") {
 			setSlider(140)
 		} else if (route === "blog") {
 			setSlider(280)
 		} else if (route === "about") {
 			setSlider(420)
-		} else if (route === "cart") {
+		} else if (route === "orders") {
 			setSlider(560)
-		} else {
+		} else if(route === "cart"){
+			setSlider(695)
+		}else {
 			setSlider(undefined)
 		}
 	}, [])
 
-	const logOut = async()=>{
-		try{
-			const response = await axios.get(
-			  'http://localhost:8000/logout',
-			  {
-				headers:{
-				  'Content-Type':'application/json',
-				  'Authorization':`Bearer ${store.accessToken}`
+	const logOut = async () => {
+		try {
+			const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/logout`, {
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${store.accessToken}`,
 				},
-				withCredentials:true,
-			  }
-			)
-			store.setUser('');
-			store.setAccessToken('');
-			console.log(response.data)
-		  }catch(e){
+				withCredentials: true,
+			})
+			store.setUser("")
+			store.setAccessToken("")
+			navigate('/login')
+			cart.setSlider(undefined)
+		} catch (e) {
 			console.log(e.response)
-		  }
+		}
 	}
 	return (
 		<nav className={styles["navbar-container"]}>
@@ -127,31 +129,53 @@ function Header() {
 								About Us
 							</NavLink>
 						</div>
-						<div className={styles["links"]}>
+					{store.user && <div className={styles["links"]}>
 							<NavLink
 								onClick={() => setSlider(140 * 4)}
-								to="cart"
+								to="orders"
 								className={({isActive}) => {
 									return isActive ? styles["activeLink"] : ""
 								}}
 							>
+								Orders
+							</NavLink>
+						</div>}
+						<div className={styles["links"]}>
+							<NavLink
+								onClick={() => setSlider(140 * 5)}
+								to="cart"
+								className={({isActive}) => {
+									return isActive ? styles["activeLink"] : ""
+								}}
+								style={{
+									height:'100%',
+									display:'flex',
+									justifyContent:'center',
+									alignItems:'center'
+								}}	
+							>
 								Cart
 								<TiShoppingCart />
-								<span style={{
-									transform:'translateY(-5px)',
-									fontSize:'0.8rem',
-									color:'white',
-									fontWeight:'bold',
-									height:'20px',
-									width:'18px',
-									borderRadius:'50%',
-									textAlign:'center',
-									lineHeight:'20px',
-								}}>{cart.cartItems.length}</span>
+								<span
+									style={{
+										transform: "translateY(-5px)",
+										fontSize: "0.8rem",
+										color: "white",
+										fontWeight: "bold",
+										height: "20px",
+										width: "18px",
+										borderRadius: "50%",
+										textAlign: "center",
+										lineHeight: "20px",
+									}}
+								>
+									{cart.cartItems.length}
+								</span>
 							</NavLink>
 						</div>
+						
 						<div className={[styles["slider"], styles["start-home"]].join(" ")}></div>
-						{slider>=0 && (
+						{slider >= 0 && (
 							<div
 								className={[styles["slider"]].join(" ")}
 								style={{left: `${slider}px`, width: "140px", backgroundColor: "#DCDCDC"}}
@@ -159,12 +183,12 @@ function Header() {
 						)}
 					</div>
 				</div>
-				{  store.user?.length === 0 ? (
+				{store.user?.length === 0 ? (
 					<div className={styles["navbar-right-links"]}>
 						<div className={styles["links"]}>
 							<NavLink
 								to="signUp"
-								onClick={() => setSlider(0)}
+								onClick={() => setSlider(undefined)}
 								className={({isActive}) => (isActive ? styles["activeSL"] : "")}
 							>
 								SignUp
@@ -173,7 +197,7 @@ function Header() {
 						<div className={styles["links"]}>
 							<NavLink
 								to="login"
-								onClick={() => setSlider(0)}
+								onClick={() => setSlider(undefined)}
 								className={({isActive}) => (isActive ? styles["activeSL"] : "")}
 							>
 								Login
@@ -185,7 +209,8 @@ function Header() {
 						<div className={styles["links"]}>
 							<NavLink
 								to="#"
-								onClick={() => logOut()}
+								onClick={() => logOut()
+								}
 								className={({isActive}) => (isActive ? styles["activeSL"] : "")}
 							>
 								Logout

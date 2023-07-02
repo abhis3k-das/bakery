@@ -4,7 +4,7 @@ import {useEffect, useRef, useState} from "react"
 import axios from 'axios';
 import { useContext} from "react"
 import { UserContext} from '../../Context/user-context'
-
+import { StoreContext } from "../../Context/store-context";
 function Login() {
 	const emailRef = useRef()
 	const errRef = useRef()
@@ -13,7 +13,8 @@ function Login() {
 	const [pwd, setPwd] = useState("")
 	const [errMsg, setErrMsg] = useState("")
 
-	const store = useContext(UserContext);
+	const user = useContext(UserContext);
+	const store = useContext(StoreContext);
 	const navigate = useNavigate();
 	useEffect(() => {
 		emailRef.current.focus()
@@ -29,7 +30,7 @@ function Login() {
 		}
         try{
 			const response = await axios.post(
-				"http://localhost:8000/login",
+				`${process.env.REACT_APP_BASE_URL}/login`,
 				JSON.stringify({
 					email:email,
 					password:pwd,
@@ -41,15 +42,16 @@ function Login() {
 					withCredentials:true,
 				}
 			)
-			store.setUser(email);
-			store.setAccessToken(response.data?.accessToken)
+			user.setUser(response.data?.user);
+			user.setAccessToken(response.data?.accessToken)
 			navigate('/home')
+			store.setSlider(0);
 			setEmail('');
 			setPwd('');
-
+		
 		}catch(e){
+			console.log(e)
 			setErrMsg("Invalid email/password");
-			console.log(e.response)
 		}
 
     }

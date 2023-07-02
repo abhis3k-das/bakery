@@ -20,6 +20,9 @@ const userSchema = new mongoose.Schema({
     state:{
         type:String,
     },
+    city:{
+        type:String,
+    },
     postalCode:{
         type:Number,
         maxLength:10,

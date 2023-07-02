@@ -70,8 +70,6 @@ module.exports.updatedReview = async (req, res) => {
 }
 
 module.exports.deleteReview = async(req,res)=>{
-	console.log("herer",req.body)
-	console.log(req.params.id)
 	const user = await User.findOne({_id:req.body.user_Id})
 	const review = await Review.findOne({_id:req.params.id})
 	if(!user){

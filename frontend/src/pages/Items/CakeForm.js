@@ -1,5 +1,5 @@
 import styles from "./CakeForm.module.css"
-function CakeForm({selectedWeight, data, setSelectedWeight, setCakeMessage, category}) {
+function CakeForm({selectedWeight, data, setSelectedWeight, setCakeMessage, category,cakeMessage}) {
 	return (
 		<div className={styles["cake-area"]}>
 			<h1>Select Weight : </h1>
@@ -26,6 +26,7 @@ function CakeForm({selectedWeight, data, setSelectedWeight, setCakeMessage, cate
 						maxLength={20}
 						placeholder="Happy ..."
 						onChange={(e) => setCakeMessage(e.target.value)}
+						value={cakeMessage}
 					/>
 				</>
 			)}

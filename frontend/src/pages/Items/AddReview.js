@@ -33,7 +33,7 @@ function AddReview({product_id,setSelectedItem, setEdit, edit, setEditReviewData
 			return
 		}
 		try {
-			const url = edit ? "http://localhost:8000/updateReview" : "http://localhost:8000/addReview"
+			const url = edit ? `${process.env.REACT_APP_BASE_URL}/updateReview` : `${process.env.REACT_APP_BASE_URL}/addReview`
 			const jsonData = edit
 				? JSON.stringify({
                         review_Id:editReviewData._id,

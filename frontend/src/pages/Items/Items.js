@@ -1,7 +1,6 @@
 import styles from "./Items.module.css"
 import {useEffect, useState} from "react"
 import {motion} from "framer-motion"
-import {sampleCake} from "./sampleData"
 import {FaShoppingCart} from "react-icons/fa"
 
 import Rating from "../../components/Rating"
@@ -30,10 +29,18 @@ function Items() {
 	const [editReviewData,setEditReviewData] = useState();
 
 	useEffect(() => {
-		console.log(store.products)
-		const findItem = store.cartItems.filter((each) => each.itemId === selectedItem?.id)[0]
+		console.log(store.cartItems)
+		console.log(selectedItem)
+		setQuantity(1)
+		setSelectedWeight(0)
+		setCakeMessage("")
+		setMessage("")
+		const findItem = store.cartItems.filter((each) => each.itemId === selectedItem?._id)[0]
 		if (findItem) {
+			console.log(findItem)
 			setQuantity(findItem.quantity)
+			setMessage(findItem.message)
+			setCakeMessage(findItem.cakeMessage)
 		}
 		if (selectedItem) {
 			console.log(selectedItem)
@@ -52,6 +59,11 @@ function Items() {
 		if (quantity > 100) {
 			setQuantity(100)
 			return
+		}
+		const findItem = store.cartItems.filter((each) => each.itemId === selectedItem?._id)[0]
+		
+		if(findItem && findItem.quantity !== quantity){
+			store.addToCart(selectedItem,quantity,findItem.message,findItem.selectedWeight,findItem.cakeMessage)
 		}
 	}, [quantity])
 
@@ -75,6 +87,7 @@ function Items() {
 	}
 	const updateCart = () => {
 		store.addToCart(selectedItem, quantity, message, selectedWeight, cakeMessage)
+
 	}
 	return (
 		<div className={styles["items-page"]}>
@@ -124,6 +137,7 @@ function Items() {
 										data={selectedItem}
 										setSelectedWeight={setSelectedWeight}
 										setCakeMessage={setCakeMessage}
+										cakeMessage={cakeMessage}
 										category={selectedItem.category}
 									/>
 

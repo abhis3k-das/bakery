@@ -6,6 +6,10 @@ const productSchema = new mongoose.Schema({
         type:String,
         enum:["cake","cookie","bread","dairy"]
     },
+    veg:{
+        type:String,
+        enum:["Yes","No"]
+    },
     image:[{
         url:String,
         original_name:String,

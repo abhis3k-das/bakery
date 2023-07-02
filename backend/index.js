@@ -11,7 +11,7 @@ const mongoose = require("mongoose")
 // const User = require("./models/User")
 // const Product = require("./models/Product")
 // const Review = require("./models/Reviews")
-const mongoUrl = "mongodb+srv://abhis3k:v9KTK8NfiKU6qOcx@bakery.ys4rene.mongodb.net/bakery?retryWrites=true&w=majority"
+const mongoUrl = process.env.MONGOOSE_URL
 require("dotenv").config()
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
@@ -35,9 +35,11 @@ mongoose
 const userRoutes = require('./routes/user')
 const productsRoutes = require('./routes/products')
 const reviewRoutes = require("./routes/reviews")
+const orderRoutes = require('./routes/orders')
 app.use("/",userRoutes);
 app.use("/",productsRoutes);
 app.use("/",reviewRoutes);
+app.use("/",orderRoutes);
 // const verifyJWT = (req, res, next) => {
 // 	const authHeader = req.headers["authorization"] || req.headers["Authorization"]
 // 	console.log(req.headers["authorization"])

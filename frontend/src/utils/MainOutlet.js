@@ -12,7 +12,7 @@ function MainOutlet() {
 	useEffect(() => {
 		const checkForLoggedInUser = async () => {
 			try {
-				const response = await axios.get("http://localhost:8000/refresh", {
+				const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/refresh`, {
 					headers: {
 						"Content-Type": "application/json",
 					},
@@ -32,7 +32,7 @@ function MainOutlet() {
 	useEffect(() => {
 		const getProducts = async () => {
 			try {
-				const response = await axios.get("http://localhost:8000/getProducts", {
+				const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/getProducts`, {
 					headers: {
 						"Content-Length": "application/json",
 					},

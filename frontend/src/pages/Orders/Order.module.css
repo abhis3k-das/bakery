@@ -1,0 +1,104 @@
+.order-container {
+    padding: 3rem 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    font-family: 'Cormorant Infant';
+    transition: all 0.3s ease;
+    color: #ffffff;
+    overflow: auto;
+}
+
+.background-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://img.freepik.com/premium-vector/seamless-pattern-home-bakery-theme-dark-background_267243-436.jpg");
+    background-repeat: repeat;
+    z-index: -2;
+    top:0;
+    left:0;
+    right:0;
+  }
+  
+.order-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.order-card {
+    width: 640px;
+    margin-bottom: 2rem;
+}
+
+.visible-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    background-color: transparent;
+    border-radius: 4px;
+    box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 8px;
+    border:1px solid white;
+}
+
+.order-card h2 {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.card-left h2 {
+    margin-bottom: 1rem;
+}
+
+.card-right {
+    width: 20%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-right h2 {
+    font-size: 2rem;
+}
+
+.card-left span {
+    font-weight: bold;
+}
+
+.items-list{
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 500ms;
+    width:640px;
+    margin-top: 0.2rem;
+}
+.items-container{
+    overflow: hidden;
+    background-color: transparent;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+    border: 1px solid #777;
+
+}
+.items-container:has(.items-list.show){
+    padding: 16px;
+}
+.items-list.show{
+    grid-template-rows: 1fr;
+}
+.item-description {
+    font-size: 14px;
+    margin: 8px;
+    text-align: left; /* Adjust the alignment as needed */
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Add box shadow */
+    padding: 8px; /* Add padding for better spacing */
+    /* Add more styles as needed */
+  }
+  
