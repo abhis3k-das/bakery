@@ -3,17 +3,8 @@ import TypingEffect from "../../components/TypingEffect";
 import React, { useState, useEffect, useRef } from "react";
 function Section4() {
     const textRef = useRef();
-    const [opacity, setOpacity] = useState(false);
     const [textArea,setTextArea] = useState(<></>)
-    const fullText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Pellentesque sollicitudin eros et mi venenatis,sit amet aliquamlibero porta. Pellentesque non risus nibh. Integer vulputate accumsan nunc ac pellentesque. Phasellus dignissim mollis dolor in commodo.\n\nUt consequat, nulla in ornare tempus, nulla sem mattis lacus, id interdum nisl nisi pretium nisl. Maecenas at lorem ut augue vestibulum bibendum. Duis imperdiet est quis ipsum convallis, at vulputate velit ornare. Quisque tempus odio est, at pulvinar magna aliquet non. Etiam mollis odio vel scelerisque tristique.\n\nProin malesuada tellus vitae lectus elementum, eget cursus erat iaculis. In lobortis, metus vitae viverra iaculis, sapien turpis tristique augue, sed maximus justo eros at tortor. Curabitur semper mattis diam egestas auctor. Aliquam vel posuere risus. Proin pulvinar ultrices purus, eget cursus lectus cursus vitae`; // Adjust the text to be typed
-    useEffect(() => {
-        if (textRef) {
-            setOpacity(
-                window.getComputedStyle(textRef.current).getPropertyValue("opacity")>0
-            );
-        }    
-    },[textRef]);
-   
+    const fullText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Pellentesque sollicitudin eros et mi venenatis,sit amet aliquamlibero porta. Pellentesque non risus nibh. Integer vulputate accumsan nunc ac pellentesque. Phasellus dignissim mollis dolor in commodo.\n\nUt consequat, nulla in ornare tempus, nulla sem mattis lacus, id interdum nisl nisi pretium nisl. Maecenas at lorem ut augue vestibulum bibendum. Duis imperdiet est quis ipsum convallis, at vulputate velit ornare. Quisque tempus odio est, at pulvinar magna aliquet non. Etiam mollis odio vel scelerisque tristique.\n\nProin malesuada tellus vitae lectus elementum, eget cursus erat iaculis. In lobortis, metus vitae viverra iaculis, sapien turpis tristique augue, sed maximus justo eros at tortor. Curabitur semper mattis diam egestas auctor. Aliquam vel posuere risus. Proin pulvinar ultrices purus, eget cursus lectus cursus vitae`;   
     useEffect(()=>{
         const observer = new IntersectionObserver(
             (entries) => {

@@ -1,4 +1,4 @@
-import {useEffect, useState, Suspense, lazy} from "react"
+import {useEffect, useState} from "react"
 import styles from "./Blog.module.css"
 import {blogData} from "./SampleData"
 import {Swiper, SwiperSlide} from "swiper/react"
@@ -82,27 +82,3 @@ function Blog() {
 	)
 }
 export default Blog
-
-// const [text,setText] = useState('')
-//     const [res,setRes] = useState('')
-//     const onSumbitHandler = (e)=>{
-//         e.preventDefault();
-//         setRes(text)
-//         setText('')
-//         console.log(text)
-//     }
-
-{
-	/* <form onSubmit={onSumbitHandler}>
-                <textarea style={{height:'100px' , width:'600px'}} value={text} onChange={(e)=>{setText(e.target.value)}}></textarea>
-                <button>Add</button>
-            </form>
-            <div>
-                {res.split('\n').map((each)=>{
-                    if(each === ''){
-                        return <br></br>
-                    } 
-                    return <p>{each}</p>
-                })}
-            </div> */
-}

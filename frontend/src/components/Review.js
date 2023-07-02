@@ -15,7 +15,6 @@ function Review({reviewData, setEdit, setEditReviewData, setSelectedItem}) {
 
 		const formattedDate = `${day < 10 ? "0" + day : day}/${month < 10 ? "0" + month : month}/${year}`
 		setDate(formattedDate)
-		console.log(reviewData)
 	}, [])
 
 	const deleteReview = async () => {

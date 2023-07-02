@@ -27,7 +27,7 @@ function CartItemCard({removeItem,id,item}) {
     }
     useEffect(()=>{
         cart.addToCart(item.selectedItem,quantity,item?.message,item?.selectedWeight,item?.cakeMessage)
-    },[quantity])
+    },[quantity,item,cart])
 	return (
 		<div className={styles["item-card-container"]}>
 			<div className={styles["item-card-left"]}>

@@ -49,7 +49,7 @@ function Header() {
 
 	const logOut = async () => {
 		try {
-			const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/logout`, {
+			await axios.get(`${process.env.REACT_APP_BASE_URL}/logout`, {
 				headers: {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${store.accessToken}`,

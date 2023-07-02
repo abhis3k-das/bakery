@@ -126,7 +126,7 @@ function AddItem() {
 	}
 	return (
 		<div className={styles["newItem-container"]}>
-			<img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2100&q=80"></img>
+			<img alt="add image" src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2100&q=80"></img>
 			<div></div>
 			<div className={styles["newItem-card"]}>
 				<div className={styles["header"]}>

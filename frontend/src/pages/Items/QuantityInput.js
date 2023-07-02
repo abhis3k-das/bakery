@@ -1,4 +1,3 @@
-import {useEffect, useState} from "react"
 import styles from "./QuantityInput.module.css"
 function QuantityInput({setQuantity, quantity, message, setMessage, price}) {
     console.log(quantity)

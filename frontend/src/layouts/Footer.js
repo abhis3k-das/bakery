@@ -17,19 +17,19 @@ function Footer() {
 						<p>Donec et nunc in eros rhoncus sodales. Quisque dui id porttitor iaculis, nisi tortor lobortis massa. Ut ut magna ante. Donec gravida enim eget finibus accumsan. Vivamus facilisis.</p>
 						<p>
 							Follow us : &nbsp;&nbsp;&nbsp;
-							<a href="#">
+							<a href="https://www.facebook.com/">
 								<ImFacebook style={{color: "white", height: "1.5rem", width: "1.5rem"}} />
 							</a>
 							&nbsp;&nbsp;&nbsp;
-							<a href="#">
+							<a href="https://twitter.com/">
 								<ImTwitter style={{color: "white", height: "1.5rem", width: "1.5rem"}} />
 							</a>
 							&nbsp;&nbsp;&nbsp;
-							<a href="#">
+							<a href="https://www.instagram.com/">
 								<ImInstagram style={{color: "white", height: "1.5rem", width: "1.5rem"}} />
 							</a>
 							&nbsp;&nbsp;&nbsp;
-							<a href="#">
+							<a href="https://in.pinterest.com/">
 								<ImPinterest style={{color: "white", height: "1.5rem", width: "1.5rem"}} />
 							</a>
 						</p>
@@ -44,7 +44,7 @@ function Footer() {
 							{feedsUrl.map((each, index) => {
 								return (
 									<div key={index} className={styles["feeds-img"]}>
-										<img src={each}></img>
+										<img src={each} alt="404"></img>
 									</div>
 								)
 							})}
