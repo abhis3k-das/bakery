@@ -9,7 +9,7 @@ function Item({data ,onClick}) {
             onClick={onClick}
         >
 			<h2 style={{color:'white'}}>{data.item_name}</h2>
-			<img src={data.image[0].url}></img>
+			<img src={data.image[0].url} alt="404 not found"></img>
 			<div style={{
 				position:'absolute',
 				bottom:'2rem',

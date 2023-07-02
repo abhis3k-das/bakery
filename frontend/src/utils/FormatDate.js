@@ -11,7 +11,6 @@ export function formatDate(dateString) {
 	} else {
 	  daySuffix = 'th';
 	}
-	const options = { day: 'numeric', month: 'long', year: 'numeric' };
 	const formattedDate = `${day}${daySuffix} ${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
 	return formattedDate;
   }

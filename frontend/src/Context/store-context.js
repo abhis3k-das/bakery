@@ -49,7 +49,7 @@ export const StoreProvider = (props) => {
 			}
 		}
 		saveToUserDb()
-	}, [cartItems,user.user])
+	}, [cartItems,user.user,user.accessToken])
 	useEffect(() => {
 		const getCart = async () => {
 			try {
@@ -67,7 +67,7 @@ export const StoreProvider = (props) => {
 			}
 		}
 		getCart()
-	}, [user.user])
+	}, [user.user,user.accessToken])
 	const storeVariables = {
 		addToCart: (selectedItem, quantity, message, selectedWeight, cakeMessage) => {
 			setCartItems((prev) => {

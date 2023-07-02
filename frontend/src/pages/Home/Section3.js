@@ -3,7 +3,7 @@ import {Swiper, SwiperSlide} from "swiper/react"
 import "swiper/css"
 import "swiper/css/pagination"
 import "swiper/css/navigation"
-import {useEffect, useMemo, useRef, useState,useContext} from "react"
+import {useEffect, useRef, useState,useContext} from "react"
 import {Pagination, Navigation} from "swiper"
 import { StoreContext } from "../../Context/store-context"
 function Section3() {

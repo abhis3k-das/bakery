@@ -1,25 +1,9 @@
 import styles from "./Home.module.css"
-import GotoProductsIcon from "../../components/GotoProductsIcon"
-import logo from "../../images/bakerylogo2.svg"
-import {TiShoppingCart} from "react-icons/ti"
-import {TfiMenuAlt, TfiClose} from "react-icons/tfi"
-import {NavLink} from "react-router-dom"
-import {useEffect, useState} from "react"
 import Section2 from "./Section2"
 import Section3 from "./Section3"
 import Section4 from "./Section4"
 import HomePageLogin from "../../components/HomePageLogin"
 function Home2() {
-	const [menuClicked, setMenuClicked] = useState(false)
-	useEffect(()=>{
-		const tempFunction = ()=>{
-			setMenuClicked(false);
-		}
-		window.addEventListener('resize',tempFunction);
-		return ()=>{
-			window.removeEventListener('resize',tempFunction)
-		}
-	},[])
 	return (
 		<>
 			<div className={styles["homePage-container"]}>				

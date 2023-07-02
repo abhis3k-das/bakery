@@ -47,11 +47,12 @@ function SignUp() {
 
 	const formSubmitHandler = async(e) => {
 		e.preventDefault()
-		const nameRegex = /^[A-Za-z]+$/
-		const addressRegex = /^[A-Za-z0-9-,./ ]+$/
-		const pinRegex = /^\d+$/
-		const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-		const passwordRegex = /^[A-Za-z]\w{7,14}$/
+		const nameRegex = /^[A-Za-z\s]+$/
+		const addressRegex = /^[A-Za-z0-9\s.,-]+$/
+		const pinRegex = /^\d{6}$/
+		const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+		const passwordRegex = /^\w{8,15}$/
+		
 		if (!fname || fname.length < 3 || fname.length > 30 || !nameRegex.test(fname)) {
 			setFnameErr("First name must contain characters from A-Z and a-z and length must be >=3 and <= 30")
 			fnameRef.current.focus()

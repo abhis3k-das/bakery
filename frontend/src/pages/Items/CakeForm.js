@@ -15,6 +15,8 @@ function CakeForm({selectedWeight, data, setSelectedWeight, setCakeMessage, cate
 								{data.weight[each]}
 							</div>
 						)
+					}else{
+						return <></>
 					}
 				})}
 			</div>
