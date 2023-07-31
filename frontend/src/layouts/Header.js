@@ -28,7 +28,7 @@ function Header() {
 	useEffect(() => {
 		const routeSperator = location.pathname.split("/")
 		const route = routeSperator[routeSperator.length - 1]
-		if (route === "/") {
+		if (route === "") {
 			setSlider(1)
 		} else if (route === "items") {
 			setSlider(140)
