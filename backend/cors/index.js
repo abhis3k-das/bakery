@@ -1,4 +1,4 @@
-const allowedLinks = ["http://localhost:3000"]
+const allowedLinks = ["http://localhost:3000","https://glistening-klepon-5eae84.netlify.app/home","https://bakery-315a.onrender.com"]
 const cors = require('cors')({
     optionSuccessStatus:true,
     credentials:true,
