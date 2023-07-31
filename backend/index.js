@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
-const cors = require("./cors/index")
-// const cors = require('cors')
+// const cors = require("./cors/index")
+const cors = require('cors')
 const cookieParser = require("cookie-parser")
 require('dotenv').config()
 // const bcrypt = require("bcrypt")
@@ -19,7 +19,9 @@ require("dotenv").config()
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors)
+app.use(cors({
+	origin:"*",
+}))
 app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Credentials", true)
 	next()
