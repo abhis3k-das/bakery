@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 	next()
 })
 app.use(cors({
-	origin:"https://64c781b1f2526211a41c1b14--glistening-klepon-5eae84.netlify.app",
+	origin:"https://glistening-klepon-5eae84.netlify.app"
 }))
 mongoose
 	.connect(mongoUrl, {
