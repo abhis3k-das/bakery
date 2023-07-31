@@ -1,6 +1,8 @@
 .items-page {
     width: 100%;
-    background-color: #DCDCDC;
+    /* background-color: #DCDCDC; */
+    /* background-color: black; */
+    
     padding: 6rem;
     padding-top: 1rem;
     box-sizing: border-box;
@@ -32,13 +34,13 @@
     font-size: 1.5rem;
     font-weight: 100;
     cursor: pointer;
-    background-color: white;
+    background-color: transparent;
+    border: none
 }
 
 .item-details-container .item-img {
     height: 100%;
     width: 600px;
-    border: 1px solid black;
     box-sizing: border-box;
 }
 
@@ -180,4 +182,29 @@ button[name="addToCart"] {
         align-items: flex-start;
         text-align: start;
     }
+}
+
+
+@media (width<400px) {
+    .items-page {
+        padding: 1rem;
+    }
+    .item-details-container {
+        overflow: hidden;
+    }
+    .item-details h1{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    button[name="addToCart"] {
+        bottom: 0;
+        right: 0;
+        left:0;
+        justify-content: center;
+      }
+      .item-form{
+        padding-bottom: 3rem;
+      }
 }

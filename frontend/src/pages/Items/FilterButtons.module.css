@@ -1,19 +1,22 @@
 .items-filter-buttons {
-    margin: 2rem 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     display: flex;
     justify-content: flex-end;
 }
 
 .items-filter-buttons button {
+    font-family: "Cormorant Infant";
     text-transform: uppercase;
     margin: 0 0.5rem;
     border: 0;
-    border-bottom: 1px solid black;
     height: 30px;
     width: 100px;
     min-width: 80px;
     background-color: transparent;
     color: black;
+    letter-spacing: 2px;
+    cursor: pointer;
 }
 @media (width<=680px) {
     .items-filter-buttons{
@@ -34,4 +37,13 @@
 .items-filter-buttons .selected{
     background-color: #63c5da;
     color: white;
+}
+
+
+@media (width<400px) {
+    .items-filter-buttons{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

@@ -11,7 +11,7 @@ module.exports.signUp = async (req, res) => {
 	const addressRegex = /^[A-Za-z0-9-,./ ]+$/
 	const pinRegex = /^\d+$/
 	const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-	const passwordRegex = /^[A-Za-z]\w{7,14}$/
+	const passwordRegex = /^[A-Za-z]\w{7,15}$/
 	if (!fname || fname.length < 3 || fname.length > 30 || !nameRegex.test(fname)) {
 		return res.status(400).json({message: "First name must contain characters from A-Z and a-z and length must be >=3 and <= 30"})
 	}
@@ -36,18 +36,19 @@ module.exports.signUp = async (req, res) => {
 		return res.status(400).json({message: "State cannot be empty and length<=20.Only alphabets are allowed."})
 	}
 
-	if (!pin || pin.length > 10 || !pinRegex.test(pin)) {
-		return res.status(400).json({message: "Pin cannot be empty and length<=10.Only numbers are allowed."})
+	if (!pin || pin.length !==6 || !pinRegex.test(pin)) {
+		return res.status(400).json({message: "Pin cannot be empty and length should be 6.Only numbers are allowed."})
 	}
 
 	if (!phNo || phNo.length !== 10 || !pinRegex.test(phNo)) {
+		print(typeof(phNo))
 		return res.status(400).json({message: "Phone number cannot be empty and length must be 10.Only nummers are allowed."})
 	}
 
 	if (!email || email.length > 80 || !emailRegex.test(email)) {
 		return res.status(400).json({message: "Invalid email.Allowed length is 20."})
 	}
-	if (password.length < 7 || password.length > 14 || !passwordRegex.test(password)) {
+	if (password.length < 8 || password.length > 15 || !passwordRegex.test(password)) {
 		return res.status(400).json({message: "Password must be between 7 to 16 characters which contain only characters, numeric digits, underscore and first character must be a letter"})
 	}
 	const hashedPassword = await bcrypt.hash(password, 10)
@@ -85,7 +86,7 @@ module.exports.logIn = async (req, res) => {
 		return res.status(401).json({message: "UnAuthorized (Password)"})
 	}
 	const refreshToken = jwt.sign({email: email}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: "1d"})
-	const accessToken = jwt.sign({email: email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15s"}) //30m-minutes 1w-week 1h-hour
+	const accessToken = jwt.sign({email: email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30m"}) //30m-minutes 1w-week 1h-hour
 	user.refreshTokens.push(refreshToken)
 	await user.save()
 	res.cookie("jwt", refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true})
@@ -111,7 +112,7 @@ module.exports.autoRelogin = async (req, res) => {
 				return res.status(403).json({message: "User/Token didn't Match Forbidden"})
 			}
 
-			const accessToken = jwt.sign({username: decoded.username}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15s"})
+			const accessToken = jwt.sign({username: decoded.username}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30m"})
 			return res.status(200).json({message: "New Token Generated", accessToken, user: user._id})
 		})
 	} catch (err) {
@@ -170,7 +171,6 @@ module.exports.getCart = async (req, res) => {
 
 module.exports.getUserAddress = async(req,res)=>{
 	try{
-		console.log(req.params.id)
 		const user = await User.findOne({_id:req.params.id});
 		if(!user){
 			return res.status(404).json({"message":"User not found"})

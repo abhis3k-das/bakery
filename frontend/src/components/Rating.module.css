@@ -1,7 +1,15 @@
-.rating-container{
+.rating-container {
     display: inline;
-    background-color: rgba(238, 238, 238,0.8);
+    background-color: rgba(238, 238, 238, 0.8);
     border-radius: 5px;
+    margin: 0 1.2rem;
     color: green;
     font-weight: bold;
+}
+
+@media (width<400px) {
+    .rating-container {
+        position: absolute;
+        right:0;
+    }
 }

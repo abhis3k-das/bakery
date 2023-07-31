@@ -1,6 +1,7 @@
 .cake-area {
     box-sizing: border-box;
     height: 100%;
+    width: 100%;
 }
 
 .cake-area input {
@@ -13,7 +14,7 @@
     position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-    gap:0.5rem
+    gap: 0.5rem
 }
 
 .selected-weight {
@@ -23,6 +24,7 @@
 
 .weight-box {
     height: 30px;
+    min-width: 60px;
     max-width: 100px;
     border: 1px solid black;
     text-align: center;
@@ -32,4 +34,16 @@
 
 .weight-box:first-of-type {
     margin-left: 0;
+}
+
+@media (width<400px) {
+    .cake-area{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .item-weight-selector{
+        display: flex;
+    }
 }

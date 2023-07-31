@@ -1,59 +1,63 @@
 .cart-container {
-    box-sizing: border-box;
-    padding: 5rem;
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    font-family: 'Cormorant Infant';
+  box-sizing: border-box;
+  padding: 5rem;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-family: 'Cormorant Infant';
 }
 
 .cart-left,
 .cart-right {
-    margin: 1rem;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  margin: 1rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .cart-left {
-    width: 65%;
-    display: flex;
-    flex-direction: column;
-    padding:1rem 0;
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
 }
 
 .cart-right {
-    width: 35%;
-    height: max-content;
-    padding: 0 2rem;
-    padding-bottom:2rem;
-    box-sizing: border-box;
+  width: 35%;
+  height: max-content;
+  padding: 0 2rem;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
 }
-.cart-right .box h1{
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin: 2rem 0;
-    margin-bottom: 1rem;
+
+.cart-right .box h1 {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 2rem 0;
+  margin-bottom: 1rem;
 }
+
 .cart-right .content {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
 }
-.content span:first-child{
-    min-width: 130px;
+
+.content span:first-child {
+  min-width: 130px;
 }
-.cart-right button{
-    width: 100%;
-    padding: 0.3rem 0;
-    letter-spacing: 2px;
-    font-weight: bold;
-    text-transform: uppercase;
-    border: 1px solid transparent;
-    background-color: #6cbcd5;
-    border-radius: 3px;
-    color: #fff;
-    cursor: pointer;
-    font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+
+.cart-right button {
+  width: 100%;
+  padding: 0.3rem 0;
+  letter-spacing: 2px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  background-color: #6cbcd5;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
 }
 
 
@@ -71,57 +75,90 @@
   box-shadow: none;
 }
 
-.address input,.address textarea {
-    width:80%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.address input,
+.address textarea {
+  width: 80%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.empty-cart h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.empty-cart .illustration {
+
+  width: 300px;
+  height: 300px;
+
+}
+
+.empty-cart .cta-button {
+  background-color: #6cbcd5;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.empty-cart .cta-button:hover {
+  background-color: #4799b2;
+}
+
+@media (width<1150px) {
+  .cart-container {
+    padding: 5rem 3rem;
   }
-  
-  .empty-cart {
+}
+
+@media (width<980px) {
+  .cart-container {
+    flex-direction: column-reverse;
+  }
+  .cart-left,
+  .cart-right {
+    width: 100%;
     display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+
+  }
+  .order-details{
+    flex-grow: 1;
+    margin-left: 1rem;
+    order: 1;
+  }
+  .address{
+    flex-grow: 1;
+    margin-right: 1rem;
+  }
+
+}
+
+@media (width<640px) {
+  .cart-container {
+    padding: 2rem;
+  }
+  .cart-right{
     flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    justify-content: center;
-    padding: 20px;
-    text-align: center;
   }
-  
-  .empty-cart h1 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 10px;
+  .order-details{
+    order:0;
   }
-  
-  .empty-cart .illustration {
 
-        width: 300px;
-        height: 300px;
-      
-  }
-  
-  .empty-cart .cta-button {
-    background-color: #6cbcd5;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    text-decoration: none;
-  }
-  
-  .empty-cart .cta-button:hover {
-    background-color: #4799b2;
-  }
-  
-@media (width<1050px) {
-    .cart-container{
-        padding: 5rem 3rem;
-    }
 }
 
-@media (width<850px) {
-    .cart-container{
-        padding: 3rem;
-    }
-}

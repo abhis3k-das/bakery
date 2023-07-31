@@ -4,7 +4,7 @@ import {aboutData, imageList} from "./SampleData"
 function About() {
 	const [imgList, setImgList] = useState([imageList[0], imageList[1], imageList[2], imageList[3], imageList[4]])
 	const handleScroll = () => {
-		if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight - window.innerHeight * 1) {
+		if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight - (document.documentElement.scrollHeight*0.5)) {
 			setImgList((prev) => {
 				if (imageList.length > prev.length + 1) {
 					return [...prev, imageList[prev.length + 1]]
@@ -28,7 +28,7 @@ function About() {
 				<h1>About Us</h1>
 				<div className={styles["about-us-description"]}>
 					{aboutData.description.split("\n").map((each, index) => {
-						return <p>{each}</p>
+						return <p key={"paragraph_"+index}>{each}</p>
 					})}
 				</div>
 				<img

@@ -69,3 +69,32 @@
     height: calc(100% - 2rem);
     box-sizing: border-box;
 }
+
+@media (width<980px) {
+    .blog-container{
+        padding: 6rem 4rem;
+    }
+}
+
+@media (width<760px) {
+    .blog-container{
+        padding: 6rem 2rem;
+    }
+}
+
+@media (width<640px) {
+    .blog {
+        height: 600px;
+    }
+    .blog-container{
+        padding: 2rem;
+    }
+    .blog-description{
+        flex-direction: column;
+    }
+    .blog-description-swiper-slide{
+        margin: 0.2rem 1rem;
+        height: calc(100%);
+    }
+}
+

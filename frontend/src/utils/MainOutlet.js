@@ -27,18 +27,24 @@ function MainOutlet() {
 			}
 		}
 		checkForLoggedInUser()
-		setInterval(checkForLoggedInUser,14*1000) // the time should be same or just less than the expiry time of accestoken
-	},[])
+		setInterval(checkForLoggedInUser,29*60*1000) // the time should be same or just less than the expiry time of accestoken
+	},[user])
 	useEffect(() => {
 		const getProducts = async () => {
 			try {
 				const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/getProducts`, {
 					headers: {
-						"Content-Length": "application/json",
+						"Content-Type": "application/json",
 					},
 				})
-                store.setProducts(response.data.products)
-				console.log(response.data.products)
+				function shuffleList(list) {
+					for (let i = list.length - 1; i > 0; i--) {
+					  const j = Math.floor(Math.random() * (i + 1));
+					  [list[i], list[j]] = [list[j], list[i]];
+					}
+					return list;
+				}
+                store.setProducts(shuffleList(response.data.products))
 			} catch (e) {
 				console.log(e)
 			}

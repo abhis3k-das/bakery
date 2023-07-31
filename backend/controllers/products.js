@@ -1,6 +1,8 @@
 const Product = require('../models/Product');
 module.exports.addNewProducts = async (req, res) => {
 	let {item_name, description, weightObject, priceObject, quantityObject, category} = req.body
+	item_name = decodeURIComponent(item_name)
+	description = decodeURIComponent(description)
 	weightObject = JSON.parse(weightObject)
 	quantityObject = JSON.parse(quantityObject)
 	priceObject = JSON.parse(priceObject)
@@ -18,10 +20,14 @@ module.exports.addNewProducts = async (req, res) => {
 			availability: quantityObject,
 			price: priceObject,
 		})
-		await newProduct.save()
+		const response = await newProduct.save()
+		console.log("--------------",JSON.stringify(response))
 		res.status(200).json({message: "added new product"})
 	} catch (e) {
-		res.status(500).json({message: "Failed to add new product"})
+		if (e.code === 11000){
+			return res.status(409).json({"message":`Item  "${e.keyValue.item_name}" is already present`,"status":409})
+		}
+		return res.status(500).json({message: "Failed to add new product"})
 	}
 }
 

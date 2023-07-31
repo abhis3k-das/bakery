@@ -2,7 +2,6 @@ import styles from "./ItemsContainer.module.css"
 import {motion} from 'framer-motion';
 import Item from "../../components/Item";
 function ItemContainer({filteredData,displayItem}) {
-	console.log(filteredData)
 	return (
 		<motion.div
 			layout

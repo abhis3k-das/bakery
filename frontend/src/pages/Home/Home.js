@@ -3,7 +3,7 @@ import Section2 from "./Section2"
 import Section3 from "./Section3"
 import Section4 from "./Section4"
 import HomePageLogin from "../../components/HomePageLogin"
-function Home2() {
+function Home() {
 	return (
 		<>
 			<div className={styles["homePage-container"]}>				
@@ -17,15 +17,16 @@ function Home2() {
 							<p>San Francisco , CA 94158</p>
 						</div>
 					</div>
-					<div className={styles["homePage-section1-textArea"]}>
+					{/* <div className={styles["homePage-section1-textAreaa"]}>
 						<HomePageLogin />
-					</div>
+					</div> */}
 				</div>
 			</div>
 			<Section2 />
 			<Section3 />
 			<Section4 />
 		</>
+
 	)
 }
-export default Home2
+export default Home

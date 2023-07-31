@@ -28,29 +28,32 @@ function Items() {
 	const [edit,setEdit] = useState(false)
 	const [editReviewData,setEditReviewData] = useState();
 
+	useEffect(()=>{
+		const data = localStorage.getItem('selectedItemFromHomePage');
+		if (data) {
+			setSelectedItem(JSON.parse(data));
+			localStorage.removeItem('selectedItemFromHomePage');
+		}
+	},[])
 	useEffect(() => {
-		console.log(store.cartItems)
-		console.log(selectedItem)
 		setQuantity(1)
 		setSelectedWeight(0)
 		setCakeMessage("")
 		setMessage("")
 		const findItem = store.cartItems.filter((each) => each.itemId === selectedItem?._id)[0]
 		if (findItem) {
-			console.log(findItem)
 			setQuantity(findItem.quantity)
 			setMessage(findItem.message)
 			setCakeMessage(findItem.cakeMessage)
 		}
 		if (selectedItem) {
-			console.log(selectedItem)
 			const checkinSelectedItem = Object.keys(selectedItem.availability).filter((each) => selectedItem.availability[each] > 0)
 			setIsAvailable(checkinSelectedItem.length > 0)
 			if (checkinSelectedItem.length > 0) {
 				setSelectedWeight(checkinSelectedItem[0])
 			}
 		}
-	}, [selectedItem])
+	}, [selectedItem,store.cartItems])
 	useEffect(() => {
 		if (quantity <= 0) {
 			setQuantity(1)
@@ -65,7 +68,7 @@ function Items() {
 		if(findItem && findItem.quantity !== quantity){
 			store.addToCart(selectedItem,quantity,findItem.message,findItem.selectedWeight,findItem.cakeMessage)
 		}
-	}, [quantity])
+	}, [quantity,selectedItem,store])
 
 	useEffect(() => {
 		if (selectedCategory === "all") {
@@ -94,7 +97,9 @@ function Items() {
 			{selectedItem && (
 				<div className={styles["item-details-container"]}>
 					<button
-						onClick={setSelectedItem.bind(this, null)}
+						onClick={(e)=>{
+							setSelectedItem(null)
+						}}
 						id="close"
 					>
 						X
@@ -118,7 +123,7 @@ function Items() {
 						transition={{duration: 1}}
 					>
 						<h1 name="title">
-							{selectedItem.item_name} <Rating rating={5} />
+							<span>{selectedItem.item_name}</span><Rating rating={5} />
 						</h1>
 						<div className={styles["item-data-container"]}>
 							<div className={styles["item-info-container"]}>

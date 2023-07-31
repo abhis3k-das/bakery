@@ -44,7 +44,7 @@ function Review({reviewData, setEdit, setEditReviewData, setSelectedItem}) {
 			<div style={{display: "flex", justifyContent: "space-between", margin: "0.2rem 0"}}>
 				<h1>
 					{reviewData.posted_By}
-					<Rating
+					{/* <Rating
 						rating={reviewData.rating.toFixed(1)}
 						style={{
 							fontSize: "1rem",
@@ -53,7 +53,7 @@ function Review({reviewData, setEdit, setEditReviewData, setSelectedItem}) {
 							borderRadius: "5px",
 							textAlign: "center",
 						}}
-					/>
+					/> */}
 				</h1>
 				{user.user === reviewData.user_Id && (
 					<div className={styles["button-container"]}>

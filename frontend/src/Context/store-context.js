@@ -36,13 +36,12 @@ export const StoreProvider = (props) => {
 						},
 						{
 							headers: {
-								"Content-Length": "application/json",
+								"Content-Type": "application/json",
 								Authorization: `Bearer ${user.accessToken}`,
 							},
 							withCredentials: true,
 						}
 					)
-					console.log(response)
 				} catch (e) {
 					console.log(e)
 				}
@@ -60,7 +59,6 @@ export const StoreProvider = (props) => {
 					},
 					withCredentials: true,
 				})
-				console.log(response.data.cart_items)
                 setCartItems(response.data.cart_items)
 			} catch (e) {
 				console.log(e)

@@ -102,3 +102,19 @@
     /* Add more styles as needed */
   }
   
+  @media (width<680px) {
+    .order-card ,
+    .items-list{
+        width: 540px;
+    }
+  }
+
+  @media (width<560px) {
+    .order-card ,
+    .items-list{
+        width: 440px;
+    }
+    .visible-info {
+        padding-right: 24px;
+    }
+  }

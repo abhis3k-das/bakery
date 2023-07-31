@@ -23,7 +23,6 @@ module.exports.placeOrder = async(req,res)=>{
         const pinRegex = /^\d+$/
 		const nameRegex = /^[A-Za-z ]+$/
         if(!order_placed_for || order_placed_for.trim().length === 0 || order_placed_for.trim().length > 60 || !nameRegex.test(order_placed_for)){
-            console.log(!nameRegex.test(order_placed_for))
             return res.status(400).json({"message":"Username cannot be empty and can contain upto 60 characters."})
         }
         if(!address || address.trim().length === 0 ||address.length>200 || !addressRegex.test(address)){
@@ -75,7 +74,6 @@ module.exports.placeOrder = async(req,res)=>{
         await user.save();
         return res.status(200).json({"message":"order placed successfully"})
     }catch(err){
-        console.log(err)
         return res.status(500).json({"message":"Internal Server Error"})
     }
 }
@@ -83,10 +81,8 @@ module.exports.placeOrder = async(req,res)=>{
 module.exports.getOrders = async(req,res)=>{
     try{
         const orderList = await Order.find({order_placed_by:req.params.id});
-        console.log(orderList)
         return res.status(200).json({"message":"Success",orderList})
     }catch(err){
-        console.log(err)
         return res.status(500).json({"message":"Internal Server Error"})
     }
 }

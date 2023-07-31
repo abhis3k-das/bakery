@@ -6,10 +6,12 @@ import "swiper/css/navigation"
 import {useEffect, useRef, useState,useContext} from "react"
 import {Pagination, Navigation} from "swiper"
 import { StoreContext } from "../../Context/store-context"
+import { useNavigate } from 'react-router-dom';
+import Item from "../../components/Item"
 function Section3() {
 
 	const [data,setData] = useState({
-		"dairy":[],
+		"all":[],
 		"cake":[],
 		"cookies":[],
 		"bread":[],
@@ -18,45 +20,34 @@ function Section3() {
 	const [product, setProduct] = useState("cake")
     const header = useRef();
     const carousel = useRef();
+	const navigate = useNavigate();
 	useEffect(()=>{
-		console.log(store.products)
+		let cakeCount = 0;
+		let cookieCount = 0;
+		let breadCount = 0;
 		store?.products.forEach((each)=>{
-			if(each.category === "dairy"){
-				setData((prev)=>{
-					let temp = prev.dairy
-					if(temp.length === 0){
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-					}else{
-						temp.push(each)
-					}
-					return {
-						...prev,
-						"dairy":temp,
-					}
-				})
-			}else if(each.category === 'cake'){
+			if(each.category === "cake"){
+				cakeCount += 1
+			}else if(each.category === "cookie"){
+				cookieCount += 1
+			}else{
+				breadCount += 1
+			}
+		})
+		setData((prev)=>{
+			return {...prev,
+			"all":store?.products
+			}
+		})
+		store?.products.forEach((each)=>{
+			if(each.category === 'cake'){
 				setData((prev)=>{
 					let temp = prev.cake
-					if(temp.length === 0){
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
+					if(temp.length === 0 && cakeCount < 10){
+						while(cakeCount < 10){
+							temp.push(each)
+							cakeCount += 1
+						}
 					}else{
 						temp.push(each)
 					}
@@ -68,17 +59,11 @@ function Section3() {
 			}else if(each.category === 'cookie'){
 				setData((prev)=>{
 					let temp = prev.cookies
-					if(temp.length === 0){
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
+					if(temp.length === 0 && cookieCount < 10){
+						while(cookieCount < 10){
+							temp.push(each)
+							cookieCount += 1
+						}
 					}else{
 						temp.push(each)
 					}
@@ -90,17 +75,11 @@ function Section3() {
 			}else if(each.category === 'bread'){
 				setData((prev)=>{
 					let temp = prev.bread
-					if(temp.length === 0){
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
-						temp.push(each)
+					if(temp.length === 0 && breadCount < 10){
+						while(breadCount < 10){
+							temp.push(each)
+							breadCount += 1
+						}
 					}else{
 						temp.push(each)
 					}
@@ -125,11 +104,11 @@ function Section3() {
         observer.observe(carousel.current);
     },[])
 	const switchItemHandler = (type) => {
-		console.log(type)
 		setProduct(type)
 	}
-    const addToCart = ()=>{
-        console.log('clicked')
+    const addToCart = (item)=>{
+		localStorage.setItem('selectedItemFromHomePage', JSON.stringify(item));
+		navigate('/items', { state: {item} });
     }
 	return (
 		<div className={styles["homePage-section3-container"]}>
@@ -142,9 +121,9 @@ function Section3() {
 					</h1>
 				</div>
 				<div className={styles["homePage-section3-items"]}>
-					<span onClick={switchItemHandler.bind(this, "dairy")} className={[product === "dairy" ? styles["homePage-section3-activeItem"] : "", styles["homePage-section3-item"]].join(" ")}>
+					<span onClick={switchItemHandler.bind(this, "all")} className={[product === "all" ? styles["homePage-section3-activeItem"] : "", styles["homePage-section3-item"]].join(" ")}>
 						{" "}
-						Dairy{" "}
+						All{" "}
 					</span>
 					<span onClick={switchItemHandler.bind(this, "bread")} className={[product === "bread" ? styles["homePage-section3-activeItem"] : "", styles["homePage-section3-item"]].join(" ")}>
 						{" "}
@@ -198,12 +177,13 @@ function Section3() {
 					{data[product].map((each, index) => {
 						return (
 							<SwiperSlide style={{margin: "50px"}} key={Math.random()*index}>
-								<div className={styles["homePage-section3-carousel-item"]}>
-									<img src={each.image[0].url} className={styles["homePage-section3-item-image"]} alt="..."></img>
-									<span className={styles["homePage-section3-item-overlay"]}></span>
-									<span className={styles["homePage-section3-item-title"]}>{each.item_name}</span>
-									<button onClick={addToCart}>+</button>
-								</div>
+								<Item key={each._id} data={each} onClick={()=>{addToCart(each)}} style={
+									{
+										"height":"400px",
+										"borderRadius":"5px",
+										"boxShadow":"none"
+									}
+								}/>
 							</SwiperSlide>
 						)
 					})}

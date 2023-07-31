@@ -250,3 +250,40 @@
     font-family: 'Cormorant Infant';
     font-weight: 100;
 }
+
+@media (width<400px) {
+    .footer{
+        height: 180vh;
+        position: relative;
+        bottom: 0;
+        z-index: 100;
+    }
+    .left,.right,.middle{
+        padding: 0rem;
+        border:1px solid white;
+        box-sizing: border-box;
+    }
+    .left-body p:first-of-type{
+        margin-top: 80px;
+    }
+    .left{
+        height: 25%;
+        padding: 1rem;
+    }
+    .middle{
+        height: 50%;
+        padding: 1rem;
+    }
+    .feeds-container{
+        position: absolute;
+        max-height: 100%;
+        display: grid;
+        grid-template-columns:repeat(2,1fr);
+        grid-template-rows: repeat(2,1fr);
+        gap:0.8rem;
+    }
+    .right{
+        height: 25%;
+    }
+    
+}

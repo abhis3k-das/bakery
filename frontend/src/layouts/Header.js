@@ -11,7 +11,6 @@ import axios from "axios"
 function Header() {
 	const [menu, setMenu] = useState(true)
 
-
 	const store = useContext(UserContext)
 	const cart = useContext(StoreContext)
 	const {slider,setSlider} = cart
@@ -29,9 +28,8 @@ function Header() {
 	useEffect(() => {
 		const routeSperator = location.pathname.split("/")
 		const route = routeSperator[routeSperator.length - 1]
-		console.log(route)
 		if (route === "home") {
-			setSlider(0)
+			setSlider(1 	)
 		} else if (route === "items") {
 			setSlider(140)
 		} else if (route === "blog") {
@@ -40,12 +38,19 @@ function Header() {
 			setSlider(420)
 		} else if (route === "orders") {
 			setSlider(560)
-		} else if(route === "cart"){
-			setSlider(695)
 		}else {
 			setSlider(undefined)
 		}
-	}, [])
+	}, [location.pathname,setSlider])
+	useEffect(()=>{
+		const routeSperator = location.pathname.split("/")
+		const route = routeSperator[routeSperator.length - 1]
+		if(store.user && route === "cart"){
+			setSlider(700)
+		}else if(route === "cart"){
+			setSlider(560)
+		}
+	},[store.user,location.pathname,setSlider])
 
 	const logOut = async () => {
 		try {
@@ -87,7 +92,10 @@ function Header() {
 						{/* styles[close] does not exist for full scree i.e undefined */}
 						<div className={styles["links"]}>
 							<NavLink
-								onClick={() => setSlider(0)}
+								onClick={() => {
+									setSlider(1)
+									setMenu(true)
+								}}
 								to="/home"
 								className={({isActive}) => {
 									return isActive ? styles["activeLink"] : ""
@@ -98,7 +106,10 @@ function Header() {
 						</div>
 						<div className={styles["links"]}>
 							<NavLink
-								onClick={() => setSlider(140 * 1)}
+								onClick={() => {
+									setSlider(140 * 1)
+									setMenu(true)
+								}}
 								to="items"
 								className={({isActive}) => {
 									return isActive ? styles["activeLink"] : ""
@@ -109,7 +120,10 @@ function Header() {
 						</div>
 						<div className={styles["links"]}>
 							<NavLink
-								onClick={() => setSlider(140 * 2)}
+								onClick={() => {
+									setSlider(140 * 2)
+									setMenu(true)
+								}}
 								to="blog"
 								className={({isActive}) => {
 									return isActive ? styles["activeLink"] : ""
@@ -120,7 +134,10 @@ function Header() {
 						</div>
 						<div className={styles["links"]}>
 							<NavLink
-								onClick={() => setSlider(140 * 3)}
+								onClick={() =>{
+									 setSlider(140 * 3)
+									 setMenu(true)
+									}}
 								to="about"
 								className={({isActive}) => {
 									return isActive ? styles["activeLink"] : ""
@@ -131,7 +148,10 @@ function Header() {
 						</div>
 					{store.user && <div className={styles["links"]}>
 							<NavLink
-								onClick={() => setSlider(140 * 4)}
+								onClick={() => {
+									setSlider(140 * 4)
+									setMenu(true)
+								}}
 								to="orders"
 								className={({isActive}) => {
 									return isActive ? styles["activeLink"] : ""
@@ -139,20 +159,18 @@ function Header() {
 							>
 								Orders
 							</NavLink>
-						</div>}
-						<div className={styles["links"]}>
+						</div>
+					}
+						<div className={styles['links']}>
 							<NavLink
-								onClick={() => setSlider(140 * 5)}
+								onClick={() => {
+									setSlider(store.user ? 140 * 5 : 140*4)
+									setMenu(true)
+								}}
 								to="cart"
 								className={({isActive}) => {
-									return isActive ? styles["activeLink"] : ""
+									return [styles['cart-link'],isActive ? styles["activeLink"] : ""].join(" ")
 								}}
-								style={{
-									height:'100%',
-									display:'flex',
-									justifyContent:'center',
-									alignItems:'center'
-								}}	
 							>
 								Cart
 								<TiShoppingCart />
@@ -160,7 +178,6 @@ function Header() {
 									style={{
 										transform: "translateY(-5px)",
 										fontSize: "0.8rem",
-										color: "white",
 										fontWeight: "bold",
 										height: "20px",
 										width: "18px",
@@ -174,8 +191,8 @@ function Header() {
 							</NavLink>
 						</div>
 						
-						<div className={[styles["slider"], styles["start-home"]].join(" ")}></div>
-						{slider >= 0 && (
+						{/* <div className={[styles["slider"], styles["start-home"]].join(" ")}></div> */}
+						{slider && (
 							<div
 								className={[styles["slider"]].join(" ")}
 								style={{left: `${slider}px`, width: "140px", backgroundColor: "#DCDCDC"}}
@@ -188,7 +205,10 @@ function Header() {
 						<div className={styles["links"]}>
 							<NavLink
 								to="signUp"
-								onClick={() => setSlider(undefined)}
+								onClick={() => {
+									setSlider(undefined)
+									setMenu(true)
+								}}
 								className={({isActive}) => (isActive ? styles["activeSL"] : "")}
 							>
 								SignUp
@@ -197,7 +217,10 @@ function Header() {
 						<div className={styles["links"]}>
 							<NavLink
 								to="login"
-								onClick={() => setSlider(undefined)}
+								onClick={() => {
+									setSlider(undefined)
+									setMenu(true)
+								}}
 								className={({isActive}) => (isActive ? styles["activeSL"] : "")}
 							>
 								Login
@@ -209,8 +232,10 @@ function Header() {
 						<div className={styles["links"]}>
 							<NavLink
 								to="#"
-								onClick={() => logOut()
-								}
+								onClick={() => {
+									logOut()
+									setMenu(false)
+								}}
 								className={({isActive}) => (isActive ? styles["activeSL"] : "")}
 							>
 								Logout

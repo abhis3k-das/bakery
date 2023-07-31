@@ -1,6 +1,5 @@
 import styles from "./QuantityInput.module.css"
 function QuantityInput({setQuantity, quantity, message, setMessage, price}) {
-    console.log(quantity)
 	return (
 		<div className={styles["input-area"]}>
 			<h1>Quantity : </h1>
@@ -30,14 +29,16 @@ function QuantityInput({setQuantity, quantity, message, setMessage, price}) {
 					<h1>Total : ₹ {price * quantity} </h1>
 				</div>
 			</div>
-			<h1>A gift ? Leave a Message.</h1>
-			<textarea
-				className={styles["textarea"]}
-				maxLength={100}
-				placeholder="(Optional)"
-				value={message}
-				onChange={(e) => setMessage(e.target.value)}
-			/>
+			<div className={styles['gift']}>
+				<h1>A gift ? Leave a Message.</h1>
+				<textarea
+					className={styles["textarea"]}
+					maxLength={100}
+					placeholder="(Optional)"
+					value={message}
+					onChange={(e) => setMessage(e.target.value)}
+				/>
+			</div>
 		</div>
 	)
 }

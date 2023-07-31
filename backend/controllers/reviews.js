@@ -3,7 +3,6 @@ const Product = require("../models/Product")
 const Review = require("../models/Reviews")
 const mongoose = require('mongoose')
 module.exports.addNewReview =  async (req, res) => {
-	console.log(req.body)
 	const user = await User.findOne({_id: req.body.user_Id})
 	const product = await Product.findOne({_id: req.body.product_Id})
 	if (!user) {

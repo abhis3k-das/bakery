@@ -1,61 +1,85 @@
 .review-container {
-    position: relative;
-    height: 10rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    border: 1px solid black;
-    border-radius: 10px;
-    margin: 1rem 0;
-    box-sizing: border-box;
-  }
+  position: relative;
+  height: 10rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 1rem 0;
+  box-sizing: border-box;
+}
 
 .review-container h1 {
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
 .review-description {
-    max-height: 8rem;
-    overflow: auto;
-    height: 4rem;
-    margin: 0.8rem 0;
+  max-height: 8rem;
+  overflow: auto;
+  height: 4rem;
+  margin: 0.8rem 0;
 }
 
-  .button-container {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    align-items: center;
+.button-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.delete-review {
+  padding: 8px 16px;
+  margin-left: 10px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.delete-review:hover {
+  background-color: #c0392b;
+}
+
+.edit-review {
+  padding: 8px 16px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.edit-review:hover {
+  background-color: #2980b9;
+}
+
+@media (max-width: 400px) {
+  .review-container h1 {
+    font-size: 1rem;
   }
-  
+  .edit-review {
+    padding: 4px 8px; /* Adjusted padding */
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px; /* Adjusted font size */
+    cursor: pointer;
+  }
   .delete-review {
-    padding: 8px 16px;
+    padding: 4px 8px; /* Adjusted padding */
     margin-left: 10px;
     background-color: #e74c3c;
     color: white;
     border: none;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 12px; /* Adjusted font size */
     cursor: pointer;
   }
-  
-  .delete-review:hover {
-    background-color: #c0392b;
-  }
-  
-  .edit-review {
-    padding: 8px 16px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
-  .edit-review:hover {
-    background-color: #2980b9;
-  }
-  
+}

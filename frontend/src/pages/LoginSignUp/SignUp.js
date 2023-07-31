@@ -49,9 +49,9 @@ function SignUp() {
 		e.preventDefault()
 		const nameRegex = /^[A-Za-z\s]+$/
 		const addressRegex = /^[A-Za-z0-9\s.,-]+$/
-		const pinRegex = /^\d{6}$/
+		const pinRegex = /^\d+$/
 		const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-		const passwordRegex = /^\w{8,15}$/
+		const passwordRegex = /^[A-Za-z]\w{7,15}$/
 		
 		if (!fname || fname.length < 3 || fname.length > 30 || !nameRegex.test(fname)) {
 			setFnameErr("First name must contain characters from A-Z and a-z and length must be >=3 and <= 30")
@@ -89,8 +89,8 @@ function SignUp() {
 			return
 		}
 
-		if (!pin || pin.length > 10 || !pinRegex.test(pin)) {
-			setPinErr("Pin cannot be empty and length<=10.Only numbers are allowed.")
+		if (!pin || pin.length !==6 || !pinRegex.test(pin)) {
+			setPinErr("Pin cannot be empty and length should be 6.Only numbers are allowed.")
 			pinRef.current.focus()
 			return
 		}
@@ -106,8 +106,8 @@ function SignUp() {
 			emailRef.current.focus()
 			return
 		}
-		if (password.length < 7 || password.length > 14 || !passwordRegex.test(password)) {
-			setPasswordErr("Password must be between 7 to 16 characters which contain only characters, numeric digits, underscore and first character must be a letter")
+		if (password.length < 8 || password.length > 15 || !passwordRegex.test(password)) {
+			setPasswordErr("Password must be between 8 to 16 characters which contain only characters, numeric digits, underscore and first character must be a letter")
 			passwordRef.current.focus()
 			return
 		}

@@ -27,11 +27,11 @@ function CartItemCard({removeItem,id,item}) {
     }
     useEffect(()=>{
         cart.addToCart(item.selectedItem,quantity,item?.message,item?.selectedWeight,item?.cakeMessage)
-    },[quantity,item,cart])
+    },[quantity])
 	return (
 		<div className={styles["item-card-container"]}>
 			<div className={styles["item-card-left"]}>
-                <img src={item.selectedItem?.image[0].url ? "https://assets.winni.in/product/primary/2023/3/83221.jpeg?dpr=2&w=220" : ""} alt="..."></img>
+                <img src={item.selectedItem?.image[0].url ? item.selectedItem?.image[0].url : "https://assets.winni.in/product/primary/2023/3/83221.jpeg?dpr=2&w=220"} alt="..."></img>
             </div>
 			<div className={styles["item-card-right"]}>
 				<div className={styles['about']}>
@@ -40,9 +40,9 @@ function CartItemCard({removeItem,id,item}) {
 						Weight : <span>{item.selectedItem.weight[item?.selectedWeight]}</span>
 					</p>
 					<p> Price : ₹ <span>{item.selectedItem.price[item?.selectedWeight]}</span></p>
-                    <p> Veg : <span>{item.selectedItem?.veg}</span></p>
+                    {/* <p> Veg : <span>{item.selectedItem?.veg}</span></p> */}
                     <p> Message : <span>{item?.message.length === 0 ? '" "' : item?.message}</span></p>
-                    {item.selectedItem?.category === "cake" && (<p> Cake Message : <span>{item.cakeMessage}</span></p>)}
+                    {item.selectedItem?.category === "cake" && (<p> Cake Message : <span>{item.cakeMessage.length === 0 ? '" "' : item.cakeMessage}</span></p>)}
 					<div className={styles["item-card-quantity-container"]}>
 						<p>Quantity : </p>
 						<div className={styles["item-card-quantity-handler"]}>

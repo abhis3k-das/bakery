@@ -1,11 +1,19 @@
-function InputCheckBox({weight,children,price,quantity}) {
+function InputCheckBox({weight,children,price,quantity,id}) {
+    function check(){
+        const checkbox = document.getElementById(id);
+        if(checkbox.checked){
+            weight(id);
+        }else{
+            weight("")
+        }
+    }
 	return (
 		<div style={{
             display:'flex',
             justifyContent:'space-between',
             width:'100%',
         }}>
-            <input type="checkbox" onChange={weight} style={{width:'12px'}}></input>
+            <input type="checkbox" onChange={check} style={{width:'12px'}} id={id}></input>
             <label style={{width:'60px',textAlign:'start'}}>{children}</label>
 
             <input type="number" step={0.01} placeholder="Price" style={{width:'100px'}} onChange={price}></input>
