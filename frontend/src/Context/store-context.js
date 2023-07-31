@@ -52,6 +52,7 @@ export const StoreProvider = (props) => {
 	useEffect(() => {
 		const getCart = async () => {
 			try {
+				console.log(process.env.REACT_APP_BASE_URL)
 				const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/getCart/${user.user}`, {
 					headers: {
 						"Content-Type": "application/json",
