@@ -29,7 +29,7 @@ function Header() {
 		const routeSperator = location.pathname.split("/")
 		const route = routeSperator[routeSperator.length - 1]
 		if (route === "home") {
-			setSlider(1 	)
+			setSlider(1)
 		} else if (route === "items") {
 			setSlider(140)
 		} else if (route === "blog") {
@@ -96,7 +96,7 @@ function Header() {
 									setSlider(1)
 									setMenu(true)
 								}}
-								to="/home"
+								to="/"
 								className={({isActive}) => {
 									return isActive ? styles["activeLink"] : ""
 								}}

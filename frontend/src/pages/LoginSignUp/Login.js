@@ -49,7 +49,7 @@ function Login() {
 			setIsLoading(false)
 			user.setUser(response.data?.user)
 			user.setAccessToken(response.data?.accessToken)
-			navigate("/home")
+			navigate("/")
 			store.setSlider(0)
 			setEmail("")
 			setPwd("")
