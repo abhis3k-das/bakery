@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
-const cors = require("./cors/index")
+// const cors = require("./cors/index")
+const cors = require('cors')
 const cookieParser = require("cookie-parser")
 require('dotenv').config()
 // const bcrypt = require("bcrypt")
@@ -22,7 +23,9 @@ app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Credentials", true)
 	next()
 })
-app.use(cors)
+app.use(cors({
+	origin:"*"
+}))
 mongoose
 	.connect(mongoUrl, {
 		useNewUrlParser: true,
