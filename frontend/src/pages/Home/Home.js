@@ -11,8 +11,8 @@ function Home() {
 					<div className={styles["homePage-section1-overlay"]}></div>
 					<div className={styles["homePage-section1-info"]}>
 						<div className={styles["homePage-section1-textArea"]}>
-							<h1>We Are BURN </h1>
-							<h1>Artisanal Bakehouse</h1>
+							<h1>We Are  </h1>
+							<h1>Sweet Serenity Oven</h1>
 							<p>500 Terry Fancine Street</p>
 							<p>San Francisco , CA 94158</p>
 						</div>
