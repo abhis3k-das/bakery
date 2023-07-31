@@ -19,9 +19,9 @@ function App() {
       <StoreProvider>
         <Routes>
           <Route path='/' element={<MainOutlet />}>
+              <Route path='/' element={<Home />}></Route>
               <Route path='login' element={<Login/>}></Route>
               <Route path='signup' element={<SignUp/>}></Route>
-              <Route path='home' element={<Home />}></Route>
               <Route path='items' element={<Items/>}></Route>
               <Route path='blog' element={<Blog/>}/>
               <Route path='about' element={<About/>}/>
