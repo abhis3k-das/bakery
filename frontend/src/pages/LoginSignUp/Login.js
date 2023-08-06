@@ -106,7 +106,7 @@ function Login() {
 					</div>
 					<div className={styles["bottom"]}>
 						<p>
-							Not a member? <NavLink to="/bakery/signup">Create Account</NavLink>
+							Not a member? <NavLink to="/signup">Create Account</NavLink>
 						</p>
 					</div>
 				</div>
